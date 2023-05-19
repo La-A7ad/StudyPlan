@@ -47,3 +47,4 @@ const std::vector<Semester>& StudyPlan::getSemesters() const {
     return semesters;
 }
 
+//test

@@ -46,3 +46,5 @@ int Semester::getTotalCredits() const {
     }
     return totalCredits;
 }
+
+//test
