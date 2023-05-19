@@ -40,6 +40,8 @@ std::pair<float, int> GPACalculator::calculateWeightedGPA(const std::string& sem
     return { totalGradePoints / totalCreditHours, totalCreditHours };
 }
 
+//test
+
 float GPACalculator::calculateCumulativeGPA() const {
     float totalGradePoints = 0;
     int totalCreditHours = 0;
