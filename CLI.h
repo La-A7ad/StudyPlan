@@ -6,13 +6,13 @@ using json = nlohmann::json;
 
 class CLI {
 private:
-    Student studentinput;
+  Student studentinput;
 
-    static void printSlowly(const std::string &text);
-    void handleCommand(const std::string& command);
+  static void printSlowly(const std::string &text);
+  void handleCommand(const std::string &command);
 
 public:
-    void run();
+  void run();
 };
 
 json studentJSON();
