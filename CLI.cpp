@@ -36,17 +36,17 @@ void CLI::handleCommand(const std::string& command) {
     if (command == "add_semester") {
         std::string name, type;
         std::cout << "Enter semester name: ";
-        std::cin >> name;
+        std::getline(std::cin, name); // Use getline to avoid issues with cin
         std::cout << "Enter semester type (Fall/Spring/Summer): ";
-        std::cin >> type;
+        std::getline(std::cin, type); // Use getline to avoid issues with cin
 
         studyPlan.addSemester(name, type);
     } else if (command == "add_course") {
         std::string semesterName, courseTitle;
         std::cout << "Enter semester name: ";
-        std::cin >> semesterName;
+        std::getline(std::cin, semesterName); // Use getline to avoid issues with cin
         std::cout << "Enter course title: ";
-        std::cin >> courseTitle;
+        std::getline(std::cin, courseTitle); // Use getline to avoid issues with cin
 
         studyPlan.addCourseToSemester(semesterName, courseTitle);
     } else if (command == "start") {
@@ -99,4 +99,3 @@ void CLI::run() {
         }
     }
 }
-
