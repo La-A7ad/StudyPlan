@@ -23,19 +23,15 @@ public:
 };
 
 class FallSemester : public Semester {
-private:
-    bool canOverload;
 public:
     FallSemester(std::string name, bool overload)
-        : Semester(name, overload ? 21 : 18), canOverload(overload) {}
+        : Semester(name, overload ? 21 : 18) {}
 };
 
 class SpringSemester : public Semester {
-private:
-    bool canOverload;
 public:
     SpringSemester(std::string name, bool overload)
-        : Semester(name, overload ? 21 : 18), canOverload(overload) {}
+        : Semester(name, overload ? 21 : 18) {}
 };
 
 class SummerSemester : public Semester {

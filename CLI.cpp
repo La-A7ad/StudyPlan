@@ -33,10 +33,33 @@ void CLI::printSlowly(const std::string &text) {
 }
 
 void CLI::handleCommand(const std::string& command) {
-    std::istringstream iss(command);
-    std::string cmd;
-    iss >> cmd;
-    // Command handling logic here
+    if (command == "add_semester") {
+        std::string name, type;
+        std::cout << "Enter semester name: ";
+        std::cin >> name;
+        std::cout << "Enter semester type (Fall/Spring/Summer): ";
+        std::cin >> type;
+
+        studyPlan.addSemester(name, type);
+    } else if (command == "add_course") {
+        std::string semesterName, courseTitle;
+        std::cout << "Enter semester name: ";
+        std::cin >> semesterName;
+        std::cout << "Enter course title: ";
+        std::cin >> courseTitle;
+
+        studyPlan.addCourseToSemester(semesterName, courseTitle);
+    } else if (command == "start") {
+        studentinput.setDetails(studentJSON());
+    } else if (command == "student") {
+        std::string major = studentinput.getMajor();
+        std::string concentration = studentinput.getConcentration();
+        std::string year = studentinput.getyear();
+        std::string cGPA = studentinput.getcGPA();
+        bool overload = studentinput.getcanOverload();
+    } else {
+        std::cout << "Unknown command.\n";
+    }
 }
 
 void CLI::run() {
@@ -71,14 +94,9 @@ void CLI::run() {
 
         if (command == "exit") {
             break;
-        } else if (command == "start") {
-            studentinput.setDetails(studentJSON());
-        } else if (command == "student") {
-            std::string major = studentinput.getMajor();
-            std::string concentration = studentinput.getConcentration();
-            std::string year = studentinput.getyear();
-            std::string cGPA = studentinput.getcGPA();
-            bool overload = studentinput.getcanOverload();
+        } else {
+            handleCommand(command);
         }
     }
 }
+
