@@ -42,13 +42,13 @@ void CLI::handleCommand(const std::string& command) {
 
         studyPlan.addSemester(name, type);
     } else if (command == "add_course") {
-        std::string semesterName, courseTitle;
+        std::string semesterName, courseCode;
         std::cout << "Enter semester name: ";
         std::getline(std::cin, semesterName); // Use getline to avoid issues with cin
-        std::cout << "Enter course title: ";
-        std::getline(std::cin, courseTitle); // Use getline to avoid issues with cin
+        std::cout << "Enter course code: ";
+        std::getline(std::cin, courseCode); // Use getline to avoid issues with cin
 
-        studyPlan.addCourseToSemester(semesterName, courseTitle);
+        studyPlan.addCourseToSemester(semesterName, courseCode);
     } else if (command == "start") {
         studentinput.setDetails(studentJSON());
     } else if (command == "student") {
