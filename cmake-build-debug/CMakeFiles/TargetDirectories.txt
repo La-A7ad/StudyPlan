@@ -1,3 +1,0 @@
-/home/Yusuf/CLionProjects/untitled8/cmake-build-debug/CMakeFiles/CSAI_SP.dir
-/home/Yusuf/CLionProjects/untitled8/cmake-build-debug/CMakeFiles/edit_cache.dir
-/home/Yusuf/CLionProjects/untitled8/cmake-build-debug/CMakeFiles/rebuild_cache.dir
