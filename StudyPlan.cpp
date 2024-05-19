@@ -3,9 +3,9 @@
 
 void StudyPlan::addSemester(std::string name, std::string type) {
     if (type == "Fall") {
-        semesters.push_back(new FallSemester(name, true)); 
+        semesters.push_back(new FallSemester(name, true)); // Assume overload is allowed for demo
     } else if (type == "Spring") {
-        semesters.push_back(new SpringSemester(name, true)); 
+        semesters.push_back(new SpringSemester(name, true)); // Assume overload is allowed for demo
     } else if (type == "Summer") {
         semesters.push_back(new SummerSemester(name));
     } else {
@@ -15,12 +15,19 @@ void StudyPlan::addSemester(std::string name, std::string type) {
     std::cout << "Semester " << name << " added.\n";
 }
 
-void StudyPlan::addCourseToSemester(const std::string& semesterName, const std::string& courseTitle) {
+void StudyPlan::addCourseToSemester(const std::string& semesterName, const std::string& courseCode) {
     for (auto semester : semesters) {
         if (semester->getSemesterName() == semesterName) {
-            semester->addCourse(courseTitle);
+            // Check if the course exists in the courseCatalog before accessing it
+            auto it = courseCatalog.find(courseCode);
+            if (it != courseCatalog.end()) {
+                semester->addCourse(courseCode);
+            } else {
+                std::cout << "Course not found in the catalog.\n";
+            }
             return;
         }
     }
     std::cout << "Semester not found.\n";
 }
+

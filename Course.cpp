@@ -1,5 +1,7 @@
 #include "Course.h"
 
+//All courses should be taken from here
+
 std::map<std::string, Course> Course::courseCatalog = {
     {"CSAI100", {"Introduction to Computational Sciences and AI", 1, {}}},
     {"CSAI101", {"Fundamentals of Programming and Computer Science", 2, {}}},
