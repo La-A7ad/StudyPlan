@@ -1,5 +1,7 @@
 #include "Course.h"
 
+std::map<std::string, Course> Course::courseCatalog; // Note: No initialization list here
+
 
 //All courses should be taken from here
 static std::map<std::string, Course> courseCatalog = {
