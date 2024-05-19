@@ -46,7 +46,7 @@ void CLI::handleCommand(const std::string& command) {
         std::cin >> name;
         std::cout << "Enter semester type: ";
         std::cin >> type;
-        Semester* newSemester = new Semester(name, type);
+        Semester* newSemester = new Semester(name, std::stoi(type)); // Ensure type is convertible to int
         studyPlan.addSemester(*newSemester);
     } else if (command.substr(0, 6) == "search") {
         std::string courseCodePrefix = command.substr(7);

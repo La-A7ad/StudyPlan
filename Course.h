@@ -5,13 +5,15 @@
 
 class Course {
 public:
-    std::string title;
-    int creditHours;
+    std::string code;
+    int credits;
     std::vector<std::string> prerequisites;
 
-    Course(std::string t, int ch, std::vector<std::string> preqs)
-        : title(t), creditHours(ch), prerequisites(preqs) {}
+    Course(std::string c, int cr, std::vector<std::string> prereqs)
+        : code(c), credits(cr), prerequisites(prereqs) {}
 
+    std::string getCode() const { return code; }
     static std::map<std::string, Course> courseCatalog;
+     int getCredits() const { return credits; }
     static std::vector<std::string> searchCourse(const std::string& courseCodePrefix);
 };
