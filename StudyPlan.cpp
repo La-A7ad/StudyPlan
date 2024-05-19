@@ -5,8 +5,8 @@
 void StudyPlan::addCourseToSemester(const std::string& semesterName, const std::string& courseCode) {
     for (auto semester : semesters) {
         if (semester->getSemesterName() == semesterName) {
-            auto it = Course::courseCatalog.find(courseCode); // Use Course::courseCatalog
-            if (it != Course::courseCatalog.end()) { // Use Course::courseCatalog
+            auto it = Course::CourseCatalog.find(courseCode); // Use Course::courseCatalog
+            if (it != Course::CourseCatalog.end()) { // Use Course::courseCatalog
                 semester->addCourse(it->second, *this);
             } else {
                 std::cout << "Course not found in the catalog.\n";
