@@ -3,7 +3,9 @@
 #include <string>
 
 CLI::CLI() {
+    std::cout << "CLI Constructor: Initializing student..." << std::endl;
     initializeStudent();
+    std::cout << "CLI Constructor: Student initialized successfully." << std::endl;
 }
 
 void CLI::initializeStudent() {
@@ -34,6 +36,7 @@ void CLI::initializeStudent() {
 }
 
 void CLI::handleCommand(const std::string& command) {
+    std::cout << "Handling command: " << command << std::endl;
     if (command == "addSemester") {
         std::string name, type;
         std::cout << "Enter semester name: ";
@@ -63,3 +66,4 @@ void CLI::searchCourse(const std::string& courseCodePrefix) {
         std::cout << courseCode << "\n";
     }
 }
+

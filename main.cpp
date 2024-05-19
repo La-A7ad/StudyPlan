@@ -2,6 +2,7 @@
 #include <iostream>
 
 int main() {
+    std::cout << "Starting the CSAI Study Plan Editor..." << std::endl;
     CLI cli;
 
     // Print logo or any initialization messages
