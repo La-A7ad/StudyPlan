@@ -27,26 +27,25 @@ public:
     bool setDetails(const json& data);
 
     // Getters and setters for major
-    void setMajor(const std::string& gotmajor) { major = gotmajor; }
-    std::string getMajor() const { return major; }
+    void setMajor(const std::string& gotmajor);
+    std::string getMajor() const;
 
     // Getters and setters for concentration
-    void setConcentration(const std::string& gotconcentration) { concentration = gotconcentration; }
-    std::string getConcentration() const { return concentration; }
+    void setConcentration(const std::string& gotconcentration);
+    std::string getConcentration() const;
 
     // Getters and setters for year
-    void setyear(const std::string& gotyear) { year = gotyear; }
-    std::string getyear() const { return year; }
+    void setyear(const std::string& gotyear);
+    std::string getyear() const;
 
     // Getters and setters for cGPA
-    void setcGPA(const double gotcGPA) { cGPA = gotcGPA; checkProbationStatus(); }
-    double getcGPA() const { return cGPA; }
+    void setcGPA(const double gotcGPA);
+    double getcGPA() const;
 
     // Getters and setters for canOverload
-    void setcanOverload(const bool gotsetcanOverload) { canOverload = gotsetcanOverload; }
-    bool getcanOverload() const { return canOverload; }
+    void setcanOverload(const bool gotsetcanOverload);
+    bool getcanOverload() const;
 
     // Check probation status
     void checkProbationStatus();
 };
-
