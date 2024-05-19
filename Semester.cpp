@@ -32,3 +32,5 @@ void Semester::addCourse(const std::string& courseCode) {
         std::cout << "Course " << courseCode << " added successfully.\n";
     }
 }
+
+bool addCourse(const Course& course, const StudyPlan& studyPlan);

@@ -13,4 +13,5 @@ public:
         : title(t), creditHours(ch), prerequisites(preqs) {}
 
     static std::map<std::string, Course> courseCatalog;
+    static std::vector<std::string> searchCourse(const std::string& courseCodePrefix);
 };

@@ -23,3 +23,14 @@ std::map<std::string, Course> Course::courseCatalog = {
     {"CSAI499", {"Senior Project - Part 2", 3, {"CSAI498"}}},
     {"DSAI103", {"Data acquisition in data science (ETL)", 3, {"CSAI101"}}}
 };
+
+
+std::vector<std::string> Course::searchCourse(const std::string& courseCodePrefix) {
+    std::vector<std::string> results;
+    for (const auto& [courseCode, courseDetails] : courseMap) {
+        if (courseCode.find(courseCodePrefix) == 0) { // Check if the course code starts with the prefix
+            results.push_back(courseCode);
+        }
+    }
+    return results;
+}

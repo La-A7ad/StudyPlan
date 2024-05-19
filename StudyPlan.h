@@ -38,5 +38,6 @@ public:
 
     void addSemester(std::string name, std::string type);
     void addCourseToSemester(const std::string& semesterName, const std::string& courseCode);
+    void addSemester(Semester& newSemester);
 };
 

@@ -32,6 +32,13 @@ void CLI::printSlowly(const std::string &text) {
     }
 }
 
+void CLI::searchCourse(const std::string& courseCodePrefix) {
+    std::vector<std::string> results = Course::searchCourse(courseCodePrefix);
+    for (const auto& course : results) {
+        std::cout << course << std::endl;
+    }
+}
+
 void CLI::handleCommand(const std::string& command) {
     if (command == "add_semester") {
         std::string name, type;
@@ -57,6 +64,9 @@ void CLI::handleCommand(const std::string& command) {
         std::string year = studentinput.getyear();
         std::string cGPA = studentinput.getcGPA();
         bool overload = studentinput.getcanOverload();
+      else if (command.substr(0, 6) == "search") {
+        std::string courseCodePrefix = command.substr(7);
+        searchCourse(courseCodePrefix);
     } else {
         std::cout << "Unknown command.\n";
     }

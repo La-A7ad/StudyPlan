@@ -14,7 +14,7 @@ public:
     Semester(std::string name, int credits) : semesterName(name), maxCredits(credits) {}
 
     bool canAddCourse(const Course& course);
-    void addCourse(const std::string& courseCode);
+     bool addCourse(const Course& course, const StudyPlan& studyPlan);
 
     // Getter method for semesterName
     std::string getSemesterName() const {

@@ -97,3 +97,11 @@ bool Student::getcanOverload() const {
         return false;
     }
 }
+
+void Student::checkProbationStatus() {
+    if (cGPA < 2.0) {
+        isOnProbation = true;
+    } else {
+        isOnProbation = false;
+    }
+}

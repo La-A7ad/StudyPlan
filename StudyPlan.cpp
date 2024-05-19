@@ -31,3 +31,7 @@ void StudyPlan::addCourseToSemester(const std::string& semesterName, const std::
     std::cout << "Semester not found.\n";
 }
 
+void StudyPlan::addSemester(Semester& newSemester) {
+    semesters.push_back(newSemester);
+}
+

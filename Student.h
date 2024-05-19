@@ -11,6 +11,7 @@ private:
     std::string concentration;
     double cGPA;
     bool canOverload;
+    bool isOnProbation;
 
 public:
     bool validateInput(const std::string& input, const json& validOptions, const std::string& type);
@@ -30,4 +31,6 @@ public:
 
     void setcanOverload(const bool gotsetcanOverload);
     bool getcanOverload() const;
+
+    void checkProbationStatus();
 };

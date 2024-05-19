@@ -12,9 +12,12 @@ private:
 
     static void printSlowly(const std::string &text);
     void handleCommand(const std::string& command);
+     void searchCourse(const std::string& courseCodePrefix);
 
 public:
     void run();
+     
+  
 };
 
 json studentJSON();
