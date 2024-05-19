@@ -1,13 +1,8 @@
 #include "Course.h"
 
 
-
-std::map<std::string, Course> courseCatalog; // Declare as external if defined elsewhere
-
-
 //All courses should be taken from here
-
-static std::map<std::string, Course> CourseCatalog = {
+static std::map<std::string, Course> courseCatalog = {
     {"CSAI100", {"Introduction to Computational Sciences and AI", 1, {}}},
     {"CSAI101", {"Fundamentals of Programming and Computer Science", 2, {}}},
     {"CSAI102", {"Digital Logic and Computer Architecture", 3, {}}},
@@ -28,6 +23,7 @@ static std::map<std::string, Course> CourseCatalog = {
     {"CSAI499", {"Senior Project - Part 2", 3, {"CSAI498"}}},
     {"DSAI103", {"Data acquisition in data science (ETL)", 3, {"CSAI101"}}}
 };
+
 
 
 std::vector<std::string> Course::searchCourse(const std::string& courseCodePrefix) {
