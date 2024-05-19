@@ -6,7 +6,7 @@ std::map<std::string, Course> courseMap; // Declare as external if defined elsew
 
 //All courses should be taken from here
 
-std::map<std::string, Course> Course::CourseCatalog = {
+static std::map<std::string, Course> courseCatalog = {
     {"CSAI100", {"Introduction to Computational Sciences and AI", 1, {}}},
     {"CSAI101", {"Fundamentals of Programming and Computer Science", 2, {}}},
     {"CSAI102", {"Digital Logic and Computer Architecture", 3, {}}},
@@ -31,7 +31,7 @@ std::map<std::string, Course> Course::CourseCatalog = {
 
 std::vector<std::string> Course::searchCourse(const std::string& courseCodePrefix) {
     std::vector<std::string> results;
-    for (const auto& [courseCode, courseDetails] : courseMap) { // Use courseMap
+    for (const auto& [courseCode, courseDetails] : courseCatalog) {
         if (courseCode.find(courseCodePrefix) == 0) {
             results.push_back(courseCode);
         }

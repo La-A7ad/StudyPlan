@@ -1,7 +1,6 @@
 #ifndef COURSE_H
 #define COURSE_H
 
-
 #include <string>
 #include <vector>
 #include <map>
@@ -21,7 +20,7 @@ public:
     const std::vector<std::string>& getPrerequisites() const { return prerequisites; }
 
     static std::map<std::string, Course> CourseCatalog;
-    static std::vector<std::string> searchCourse(const std::string& courseCodePrefix);
+    static std::vector<std::string> searchCourse(const std::string& courseCodePrefix); // Declaration
 };
 
 #endif

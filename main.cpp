@@ -1,15 +1,18 @@
-#include <iostream>
 #include "CLI.h"
-#include "Student.h"
-
-
+#include <iostream>
 
 int main() {
-    Student student("Computer Science", "Freshman", "AI", 3.5, true);
-    CLI cli(student);
-     std::string command;
-    while (std::getline(std::cin, command)) {
+    CLI cli;
+
+    // Print logo or any initialization messages
+    std::cout << "Welcome to the CSAI Study Plan Editor! Enter 'start'." << std::endl;
+
+    std::string command;
+    while (true) {
+        std::cout << "-> ";
+        if (!std::getline(std::cin, command)) break;
         cli.handleCommand(command);
     }
+
     return 0;
 }

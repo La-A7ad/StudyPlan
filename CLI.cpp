@@ -1,42 +1,36 @@
 #include "CLI.h"
 #include <iostream>
-#include <sstream>
-#include <chrono>
-#include <thread>
+#include <string>
 
-json studentJSON() {
-    std::string jsonData = R"({
-      "Majors": {
-        "DSAI": {
-          "Concentrations": ["DSAI"]
-        },
-        "SWD": {
-          "Concentrations": ["HCI", "APD", "GD"]
-        },
-        "IT": {
-          "Concentrations": ["NS", "CC"]
-        }
-      },
-      "Years": ["2022", "2023"],
-      "canOverload" : false
-    })";
-
-    json j = json::parse(jsonData);
-    return j;
+CLI::CLI() {
+    initializeStudent();
 }
 
-void CLI::printSlowly(const std::string &text) {
-    for (char const &c : text) {
-        std::cout << c << std::flush;
-        std::this_thread::sleep_for(std::chrono::milliseconds(1));
-    }
-}
+void CLI::initializeStudent() {
+    std::string major, year, concentration;
+    double gPA;
+    bool overload;
 
-void CLI::searchCourse(const std::string& courseCodePrefix) {
-    std::vector<std::string> results = Course::searchCourse(courseCodePrefix);
-    for (const auto& course : results) {
-        std::cout << course << std::endl;
-    }
+    std::cout << "Enter major: ";
+    std::cin >> major;
+    std::cout << "Enter year: ";
+    std::cin >> year;
+    std::cout << "Enter concentration: ";
+    std::cin >> concentration;
+    std::cout << "Enter GPA: ";
+    std::cin >> gPA;
+    std::cout << "Can overload (1 for yes, 0 for no): ";
+    std::cin >> overload;
+
+    studentinput = std::make_unique<Student>();
+    studentinput->setMajor(major);
+    studentinput->setyear(year);
+    studentinput->setConcentration(concentration);
+    studentinput->setcGPA(gPA);
+    studentinput->setcanOverload(overload);
+    studentinput->checkProbationStatus();
+
+    studyPlan = std::make_unique<StudyPlan>(studentinput.get());
 }
 
 void CLI::handleCommand(const std::string& command) {
@@ -46,8 +40,8 @@ void CLI::handleCommand(const std::string& command) {
         std::cin >> name;
         std::cout << "Enter semester type: ";
         std::cin >> type;
-        Semester* newSemester = new Semester(name, std::stoi(type)); // Ensure type is convertible to int
-        studyPlan.addSemester(*newSemester);
+        Semester* newSemester = new Semester(name, 18); // Assuming default maxCredits = 18
+        studyPlan->addSemester(*newSemester);
     } else if (command.substr(0, 6) == "search") {
         std::string courseCodePrefix = command.substr(7);
         searchCourse(courseCodePrefix);
@@ -57,47 +51,15 @@ void CLI::handleCommand(const std::string& command) {
         std::cin >> semesterName;
         std::cout << "Enter course code: ";
         std::cin >> courseCode;
-        studyPlan.addCourseToSemester(semesterName, courseCode);
+        studyPlan->addCourseToSemester(semesterName, courseCode);
     } else {
         std::cout << "Unknown command.\n";
     }
 }
 
-
-void CLI::run() {
-    std::string Zewail_logo =
-                "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n"
-                "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡤⡄⠀⠀⢫⣯⡇⡤⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n"
-                "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⡠⠔⡆⡟⢣⠀⣰⢺⡅⣇⠟⣇⡤⡄⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n"
-                "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⡳⣄⢀⡻⢹⣆⣿⢸⡸⣨⠁⠛⠚⠂⠨⢤⣭⣰⡟⠦⡍⢳⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n"
-                "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠑⡉⡵⠺⣿⠽⠓⠉⠉⠁⠀⠀⠀⠀⠀⠈⠛⠚⠈⠉⠒⢬⢁⡑⡆⠀⠀⠀⠀⠀⠀⠀⠀\n"
-                "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⠖⣿⠿⠟⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠢⠔⣿⠲⡀⠀⠀⠀⠀⠀⠀\n"
-                "⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⠞⣡⠞⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠳⣌⠢⡀⠀⠀⠀⠀\n"
-                "⠀⠀⠀⠀⠀⠀⠀⠀⡰⢁⡜⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⢢⠈⢄⠀⠀⠀\n"
-                "⠀⠀⠀⠀⠀⠀⠀⡰⢁⠎⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⡾⡼⣷⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠱⡈⢧⠀⠀\n"
-                "⠀⠀⠀⠀⠀⠀⡰⠁⡎⠀⠀⠀⠀⠀⠀⠀⠀⢀⣠⣦⡀⠀⣠⣾⢿⣻⠁⠈⠻⣷⢄⠀⠀⢀⣤⣄⠀⠀⠀⠀⠀⠀⠀⢱⠈⢇⠀\n"
-                "⠀⠀⠀⠀⠀⢠⠃⡸⠀⠀⠀⠀⠀⠀⠀⢀⣴⡿⣯⠏⠙⢾⣟⢁⣮⠇⠀⠀⠀⠈⠳⣕⢾⣿⣻⠻⣷⣄⠀⠀⠀⠀⠀⠀⢇⠘⡄\n"
-                "⠀⠀⠀⠀⠀⡸⢀⡇⠀⠀⠀⠀⠀⠀⢀⣴⡿⠋⡸⡞⠀⠀⠈⠻⣟⢞⠀⠀⠀⠀⠀⠀⠈⠳⣝⢇⠀⠈⠻⣷⢄⠀⠀⠀⠀⠸⡀⢇\n"
-                "⠀⠀⠀⠀⠀⡇⢸⠀⠀⠀⠀⣀⢴⡿⣫⣴⣿⡷⡃⠀⠀⠀⠀⠈⠳⣵⣶⢿⣦⢀⠀⠀⠀⠈⠳⣕⢄⠀⠈⠳⣕⢄⠀⠀⠀⡇⢸\n"
-                "⠀⠀⠀⠀⠀⣗⣚⣒⣒⣒⣚⣓⣓⣚⣻⣻⠃⠙⢮⣓⣒⣒⣒⣒⣚⣛⣟⡎⠈⠢⣑⣒⣒⣒⣒⣚⣳⣕⣒⣒⣚⣳⣕⣒⣒⣓⣺\n"
-                "⠀⠀⠀⠀⠀⣤⡒⢲⡖⣶⡖⠒⢒⣤⡦⡤⣶⣄⠀⣠⣦⢦⠀⠀⡖⡶⡶⡄⠀⠀⠀⢀⣤⡶⢶⣄⣰⢦⣔⡖⢐⠒⡢⣄⠀⢠⣷\n"
-                "⠀⠀⠀⠀⠀⠉⢀⢞⡜⠁⠀⣥⣤⡍⢱⢹⣼⡜⣤⣿⣿⣏⢧⠀⡇⡇⡇⡇⠀⠀⠀⡞⡸⠀⠈⠓⣿⠘⠉⠁⡎⠀⠈⢎⢳⡿⠁\n"
-                "⠀⠀⠀⠀⠀⡠⢣⡎⠀⣀⡀⣇⢀⣴⠀⢇⣹⢳⢹⣿⠟⠛⣌⢆⡇⣇⡇⠇⠀⢀⠀⠱⣹⣄⣀⣴⣿⢀⠀⣀⣧⠀⠀⢸⢸⡁⠀\n"
-                "⠀⠀⠀⠀⠀⠉⠉⠉⠉⠉⠉⠉⠉⠉⠀⠈⠁⠀⠉⠉⠀⠀⠈⠉⠉⠉⠉⠉⠉⠉⠀⠀⠈⠉⠉⠁⠈⠉⠀⠈⠉⠀⠀⠀⠉⠀⠀\n"
-                "Welcome to the CSAI Study Plan Editor! Enter 'start'.     \n ";
-
-    printSlowly(Zewail_logo);
-
-    std::string command;
-
-    while (true) {
-        std::cout << "-> ";
-        std::getline(std::cin, command);
-
-        if (command == "exit") {
-            break;
-        } else {
-            handleCommand(command);
-        }
+void CLI::searchCourse(const std::string& courseCodePrefix) {
+    std::vector<std::string> results = Course::searchCourse(courseCodePrefix);
+    for (const std::string& courseCode : results) {
+        std::cout << courseCode << "\n";
     }
 }

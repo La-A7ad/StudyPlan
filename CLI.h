@@ -1,27 +1,21 @@
-#pragma once
+#ifndef CLI_H
+#define CLI_H
+
 #include "Student.h"
 #include "StudyPlan.h"
-#include "nlohmann/json.hpp"
-
-using json = nlohmann::json;
+#include <memory>
 
 class CLI {
 private:
-    Student studentinput;
-    StudyPlan studyPlan; // Add a StudyPlan member
+    std::unique_ptr<Student> studentinput;
+    std::unique_ptr<StudyPlan> studyPlan;
 
+public:
+    CLI(); // Default constructor
 
-    static void printSlowly(const std::string &text);
-    
-public: 
-    CLI(Student student) : studentinput(student), studyPlan(&studentinput) {}
     void handleCommand(const std::string& command);
     void searchCourse(const std::string& courseCodePrefix);
-
- 
-    void run();
-     
-  
+    void initializeStudent(); // Declare the initializeStudent method
 };
 
-json studentJSON();
+#endif
