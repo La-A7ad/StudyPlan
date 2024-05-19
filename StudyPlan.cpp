@@ -1,11 +1,12 @@
 #include "StudyPlan.h"
+#include "Course.h"
 #include <iostream>
 
 void StudyPlan::addCourseToSemester(const std::string& semesterName, const std::string& courseCode) {
     for (auto semester : semesters) {
         if (semester->getSemesterName() == semesterName) {
-            auto it = courseCatalog.find(courseCode);
-            if (it != courseCatalog.end()) {
+            auto it = Course::courseCatalog.find(courseCode); // Use Course::courseCatalog
+            if (it != Course::courseCatalog.end()) { // Use Course::courseCatalog
                 semester->addCourse(it->second, *this);
             } else {
                 std::cout << "Course not found in the catalog.\n";
@@ -21,9 +22,9 @@ void StudyPlan::addSemester(Semester& newSemester) {
 }
 
 bool StudyPlan::isStudentOnProbation() const {
-    return student->getGPA() < 2.0;
+    return student->getcGPA() < 2.0; // Use getcGPA()
 }
 
 bool StudyPlan::canOverload() const {
-    return student->canOverload();
+    return student->getcanOverload(); // Use getcanOverload()
 }
