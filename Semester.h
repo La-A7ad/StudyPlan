@@ -12,12 +12,10 @@ protected:
     std::string semesterName;
     std::vector<Course> courses;
 public:
-    Semester(std::string name, int credits);
+     Semester(std::string name, int credits);
     void addCourse(const Course& course, const StudyPlan& studyPlan);
     bool hasCourse(const std::string& courseCode) const;
     int getTotalCredits() const;
-
-    // Getters
     std::string getSemesterName() const { return semesterName; }
 };
 

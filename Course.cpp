@@ -6,7 +6,7 @@ std::map<std::string, Course> courseMap; // Declare as external if defined elsew
 
 //All courses should be taken from here
 
-static std::map<std::string, Course> courseCatalog = {
+static std::map<std::string, Course> CourseCatalog = {
     {"CSAI100", {"Introduction to Computational Sciences and AI", 1, {}}},
     {"CSAI101", {"Fundamentals of Programming and Computer Science", 2, {}}},
     {"CSAI102", {"Digital Logic and Computer Architecture", 3, {}}},

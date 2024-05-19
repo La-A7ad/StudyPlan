@@ -3,10 +3,9 @@
 #include <iostream>
 
 Semester::Semester(std::string name, int credits)
-    : semesterName(name), maxCredits(credits) {}
+    : maxCredits(credits), semesterName(name) {}  // Fix initializer order
 
 void Semester::addCourse(const Course& course, const StudyPlan& studyPlan) {
-    // Check if prerequisites are completed
     for (const std::string& prereq : course.getPrerequisites()) {
         bool completed = false;
         for (const auto& sem : studyPlan.getSemesters()) {
@@ -21,7 +20,6 @@ void Semester::addCourse(const Course& course, const StudyPlan& studyPlan) {
         }
     }
 
-    // Check credit limits
     int currentCredits = getTotalCredits();
     int additionalCredits = course.getCredits();
     bool isOnProbation = studyPlan.isStudentOnProbation();
@@ -43,7 +41,6 @@ void Semester::addCourse(const Course& course, const StudyPlan& studyPlan) {
         return;
     }
 
-    // Add the course
     courses.push_back(course);
     std::cout << "Course " << course.getCode() << " added successfully.\n";
 }

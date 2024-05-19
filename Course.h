@@ -19,8 +19,8 @@ public:
     int getCredits() const { return credits; }
     const std::vector<std::string>& getPrerequisites() const { return prerequisites; }
 
-    static std::map<std::string, Course> CourseCatalog;
-    static std::vector<std::string> searchCourse(const std::string& courseCodePrefix); // Declaration
+    static std::map<std::string, Course> courseCatalog;  // Static member declaration
+    static std::vector<std::string> searchCourse(const std::string& courseCodePrefix);
 };
 
 #endif
