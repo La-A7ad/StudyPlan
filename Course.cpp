@@ -1,6 +1,7 @@
 #include "Course.h"
 
-extern std::map<std::string, Course> courseCatalog; // Declare as external if defined elsewhere
+
+std::map<std::string, Course> courseMap; // Declare as external if defined elsewhere
 
 
 //All courses should be taken from here
@@ -30,8 +31,8 @@ std::map<std::string, Course> Course::courseCatalog = {
 
 std::vector<std::string> Course::searchCourse(const std::string& courseCodePrefix) {
     std::vector<std::string> results;
-    for (const auto& [courseCode, courseDetails] : courseMap) {
-        if (courseCode.find(courseCodePrefix) == 0) { // Check if the course code starts with the prefix
+    for (const auto& [courseCode, courseDetails] : courseMap) { // Use courseMap
+        if (courseCode.find(courseCodePrefix) == 0) {
             results.push_back(courseCode);
         }
     }

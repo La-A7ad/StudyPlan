@@ -10,11 +10,15 @@ private:
     Student studentinput;
     StudyPlan studyPlan; // Add a StudyPlan member
 
-    static void printSlowly(const std::string &text);
-    void handleCommand(const std::string& command);
-     void searchCourse(const std::string& courseCodePrefix);
 
-public:
+    static void printSlowly(const std::string &text);
+    
+public: 
+    CLI(Student student) : studentinput(student), studyPlan(&studentinput) {}
+    void handleCommand(const std::string& command);
+    void searchCourse(const std::string& courseCodePrefix);
+
+ 
     void run();
      
   
