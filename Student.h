@@ -47,5 +47,6 @@ public:
     bool getcanOverload() const { return canOverload; }
 
     // Check probation status
-    void checkProbationStatus() { isOnProbation = (cGPA < 2.0); }
+    void checkProbationStatus();
 };
+
