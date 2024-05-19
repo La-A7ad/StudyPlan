@@ -54,7 +54,6 @@ void CLI::handleCommand(const std::string& command) {
         std::getline(std::cin, semesterName); // Use getline to avoid issues with cin
         std::cout << "Enter course code: ";
         std::getline(std::cin, courseCode); // Use getline to avoid issues with cin
-
         studyPlan.addCourseToSemester(semesterName, courseCode);
     } else if (command == "start") {
         studentinput.setDetails(studentJSON());

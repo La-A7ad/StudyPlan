@@ -25,7 +25,7 @@ bool Semester::canAddCourse(const Course& course) {
     return true;
 }
 
-void Semester::addCourse(const std::string& courseCode) {
+bool Semester::addCourse(const Course& course, const StudyPlan& studyPlan) {
     const auto& course = Course::courseCatalog.at(courseCode);
     if (canAddCourse(course)) {
         courses.push_back(courseCode);

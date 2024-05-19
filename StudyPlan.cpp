@@ -21,7 +21,7 @@ void StudyPlan::addCourseToSemester(const std::string& semesterName, const std::
             // Check if the course exists in the courseCatalog before accessing it
             auto it = courseCatalog.find(courseCode);
             if (it != courseCatalog.end()) {
-                semester->addCourse(courseCode);
+                semester->addCourse(it->second, *this); // Pass the course and StudyPlan object
             } else {
                 std::cout << "Course not found in the catalog.\n";
             }
@@ -31,7 +31,7 @@ void StudyPlan::addCourseToSemester(const std::string& semesterName, const std::
     std::cout << "Semester not found.\n";
 }
 
-void StudyPlan::addSemester(Semester& newSemester) {
+
+void StudyPlan::addSemester(Semester* newSemester) {
     semesters.push_back(newSemester);
 }
-

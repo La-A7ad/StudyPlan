@@ -4,6 +4,8 @@
 #include <map>
 #include "Course.h"
 
+class StudyPlan;
+
 class Semester {
 protected:
     int maxCredits;  // default maximum credits
@@ -11,10 +13,11 @@ protected:
 public:
     std::vector<std::string> courses;
 
-    Semester(std::string name, int credits) : semesterName(name), maxCredits(credits) {}
+    Semester(std::string name, int credits);
 
+   
     bool canAddCourse(const Course& course);
-     bool addCourse(const Course& course, const StudyPlan& studyPlan);
+    bool addCourse(const Course& course, const StudyPlan& studyPlan);
 
     // Getter method for semesterName
     std::string getSemesterName() const {
