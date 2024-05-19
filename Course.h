@@ -20,7 +20,7 @@ public:
     const std::vector<std::string>& getPrerequisites() const { return prerequisites; }
 
     static std::map<std::string, Course> courseCatalog;  // Static member declaration
-    static std::vector<std::string> searchCourse(const std::string& courseCodePrefix);
+    static std::vector<std::string> searchCourse(const std::string& courseCodePrefix); // Declaration
 };
 
 #endif

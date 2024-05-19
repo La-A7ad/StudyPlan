@@ -1,7 +1,7 @@
 #include "Course.h"
 
 
-std::map<std::string, Course> courseMap; // Declare as external if defined elsewhere
+std::map<std::string, Course> courseCatalog; // Declare as external if defined elsewhere
 
 
 //All courses should be taken from here
