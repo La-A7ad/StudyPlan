@@ -25,7 +25,7 @@ void CLI::displayStudentData() {
 
 void CLI::run() {
 
-
+    printSlowly(Zewail_logo, delay);
     std::string command;
     while (true) {
         std::cout << "Enter command: ";
@@ -80,8 +80,6 @@ void CLI::run() {
 }
 
 void CLI::enterGPACalcEnvironment() {
-
-    printSlowly(Zewail_logo, delay);
     std::string command;
     while (true) {
         std::cout << "GPA Calc > ";
