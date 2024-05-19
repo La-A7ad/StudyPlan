@@ -2,6 +2,17 @@
 #include "Student.h"
 #include <iostream>
 #include <string>
+#include <chrono>
+#include <thread>
+
+
+     void printSlowly(const std::string& text, unsigned int milliseconds) {
+        for (char const &c : text) {
+            std::cout << c << std::flush;
+            std::this_thread::sleep_for(std::chrono::milliseconds(milliseconds));
+        }
+    }
+
 
 
 void CLI::displayStudentData() {
@@ -13,6 +24,8 @@ void CLI::displayStudentData() {
 }
 
 void CLI::run() {
+
+
     std::string command;
     while (true) {
         std::cout << "Enter command: ";
@@ -67,6 +80,8 @@ void CLI::run() {
 }
 
 void CLI::enterGPACalcEnvironment() {
+
+    printSlowly(Zewail_logo, delay);
     std::string command;
     while (true) {
         std::cout << "GPA Calc > ";
