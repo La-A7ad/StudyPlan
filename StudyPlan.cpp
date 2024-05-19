@@ -3,9 +3,9 @@
 
 void StudyPlan::addSemester(std::string name, std::string type) {
     if (type == "Fall") {
-        semesters.push_back(new FallSemester(name, true)); // Assume overload is allowed for demo
+        semesters.push_back(new FallSemester(name, true)); 
     } else if (type == "Spring") {
-        semesters.push_back(new SpringSemester(name, true)); // Assume overload is allowed for demo
+        semesters.push_back(new SpringSemester(name, true)); 
     } else if (type == "Summer") {
         semesters.push_back(new SummerSemester(name));
     } else {

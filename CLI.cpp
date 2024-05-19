@@ -33,7 +33,7 @@ void CLI::printSlowly(const std::string &text) {
 }
 
 void CLI::handleCommand(const std::string& command) {
-    if (command == "add_semester") {
+    if (command == "mksem") {
         std::string name, type;
         std::cout << "Enter semester name: ";
         std::getline(std::cin, name); // Use getline to avoid issues with cin
@@ -41,7 +41,7 @@ void CLI::handleCommand(const std::string& command) {
         std::getline(std::cin, type); // Use getline to avoid issues with cin
 
         studyPlan.addSemester(name, type);
-    } else if (command == "add_course") {
+    } else if (command == "addcourse") {
         std::string semesterName, courseTitle;
         std::cout << "Enter semester name: ";
         std::getline(std::cin, semesterName); // Use getline to avoid issues with cin
