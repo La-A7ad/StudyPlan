@@ -17,7 +17,7 @@ public:
 
    
     bool canAddCourse(const Course& course);
-    bool addCourse(const Course& course, const StudyPlan& studyPlan);
+    void addCourse(const Course& course, const StudyPlan& studyPlan);
 
     // Getter method for semesterName
     std::string getSemesterName() const {

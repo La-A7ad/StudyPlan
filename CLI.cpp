@@ -63,6 +63,7 @@ void CLI::handleCommand(const std::string& command) {
         std::string year = studentinput.getyear();
         std::string cGPA = studentinput.getcGPA();
         bool overload = studentinput.getcanOverload();
+    }
       else if (command.substr(0, 6) == "search") {
         std::string courseCodePrefix = command.substr(7);
         searchCourse(courseCodePrefix);

@@ -18,10 +18,9 @@ void StudyPlan::addSemester(std::string name, std::string type) {
 void StudyPlan::addCourseToSemester(const std::string& semesterName, const std::string& courseCode) {
     for (auto semester : semesters) {
         if (semester->getSemesterName() == semesterName) {
-            // Check if the course exists in the courseCatalog before accessing it
-            auto it = courseCatalog.find(courseCode);
+            auto it = courseCatalog.find(courseCode); // Ensure courseCatalog is defined and used correctly
             if (it != courseCatalog.end()) {
-                semester->addCourse(it->second, *this); // Pass the course and StudyPlan object
+                semester->addCourse(it->second, *this);
             } else {
                 std::cout << "Course not found in the catalog.\n";
             }
@@ -34,4 +33,7 @@ void StudyPlan::addCourseToSemester(const std::string& semesterName, const std::
 
 void StudyPlan::addSemester(Semester* newSemester) {
     semesters.push_back(newSemester);
+}
+void StudyPlan::addSemester(std::string name, std::string type) {
+    // idk what im doing
 }
