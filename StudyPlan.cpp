@@ -1,24 +1,10 @@
 #include "StudyPlan.h"
 #include <iostream>
 
-void StudyPlan::addSemester(std::string name, std::string type) {
-    if (type == "Fall") {
-        semesters.push_back(new FallSemester(name, true)); // Assume overload is allowed for demo
-    } else if (type == "Spring") {
-        semesters.push_back(new SpringSemester(name, true)); // Assume overload is allowed for demo
-    } else if (type == "Summer") {
-        semesters.push_back(new SummerSemester(name));
-    } else {
-        std::cout << "Invalid semester type.\n";
-        return;
-    }
-    std::cout << "Semester " << name << " added.\n";
-}
-
 void StudyPlan::addCourseToSemester(const std::string& semesterName, const std::string& courseCode) {
     for (auto semester : semesters) {
         if (semester->getSemesterName() == semesterName) {
-            auto it = courseCatalog.find(courseCode); // Ensure courseCatalog is defined and used correctly
+            auto it = courseCatalog.find(courseCode);
             if (it != courseCatalog.end()) {
                 semester->addCourse(it->second, *this);
             } else {
@@ -30,10 +16,14 @@ void StudyPlan::addCourseToSemester(const std::string& semesterName, const std::
     std::cout << "Semester not found.\n";
 }
 
-
-void StudyPlan::addSemester(Semester* newSemester) {
-    semesters.push_back(newSemester);
+void StudyPlan::addSemester(Semester& newSemester) {
+    semesters.push_back(&newSemester);
 }
-void StudyPlan::addSemester(std::string name, std::string type) {
-    // idk what im doing
+
+bool StudyPlan::isStudentOnProbation() const {
+    return student->getGPA() < 2.0;
+}
+
+bool StudyPlan::canOverload() const {
+    return student->canOverload();
 }

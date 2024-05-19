@@ -10,19 +10,15 @@ class Semester {
 protected:
     int maxCredits;  // default maximum credits
     std::string semesterName;
+    std::vector<Course> courses;
 public:
-    std::vector<std::string> courses;
-
-    Semester(std::string name, int credits);
-
-   
-    bool canAddCourse(const Course& course);
+     Semester(std::string name, int credits);
     void addCourse(const Course& course, const StudyPlan& studyPlan);
+    bool hasCourse(const std::string& courseCode) const;
+    int getTotalCredits() const;
 
-    // Getter method for semesterName
-    std::string getSemesterName() const {
-        return semesterName;
-    }
+    // Getters
+    std::string getSemesterName() const { return semesterName; }
 };
 
 class FallSemester : public Semester {

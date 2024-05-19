@@ -40,37 +40,29 @@ void CLI::searchCourse(const std::string& courseCodePrefix) {
 }
 
 void CLI::handleCommand(const std::string& command) {
-    if (command == "add_semester") {
+    if (command == "addSemester") {
         std::string name, type;
         std::cout << "Enter semester name: ";
-        std::getline(std::cin, name); // Use getline to avoid issues with cin
-        std::cout << "Enter semester type (Fall/Spring/Summer): ";
-        std::getline(std::cin, type); // Use getline to avoid issues with cin
-
-        studyPlan.addSemester(name, type);
-    } else if (command == "add_course") {
-        std::string semesterName, courseCode;
-        std::cout << "Enter semester name: ";
-        std::getline(std::cin, semesterName); // Use getline to avoid issues with cin
-        std::cout << "Enter course code: ";
-        std::getline(std::cin, courseCode); // Use getline to avoid issues with cin
-        studyPlan.addCourseToSemester(semesterName, courseCode);
-    } else if (command == "start") {
-        studentinput.setDetails(studentJSON());
-    } else if (command == "student") {
-        std::string major = studentinput.getMajor();
-        std::string concentration = studentinput.getConcentration();
-        std::string year = studentinput.getyear();
-        std::string cGPA = studentinput.getcGPA();
-        bool overload = studentinput.getcanOverload();
-    }
-      else if (command.substr(0, 6) == "search") {
+        std::cin >> name;
+        std::cout << "Enter semester type: ";
+        std::cin >> type;
+        Semester* newSemester = new Semester(name, type);
+        studyPlan.addSemester(*newSemester);
+    } else if (command.substr(0, 6) == "search") {
         std::string courseCodePrefix = command.substr(7);
         searchCourse(courseCodePrefix);
+    } else if (command == "addCourse") {
+        std::string semesterName, courseCode;
+        std::cout << "Enter semester name: ";
+        std::cin >> semesterName;
+        std::cout << "Enter course code: ";
+        std::cin >> courseCode;
+        studyPlan.addCourseToSemester(semesterName, courseCode);
     } else {
         std::cout << "Unknown command.\n";
     }
 }
+
 
 void CLI::run() {
     std::string Zewail_logo =

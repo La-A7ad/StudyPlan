@@ -14,23 +14,38 @@ private:
     bool isOnProbation;
 
 public:
+    // Constructor
+    Student(const std::string& maj, const std::string& yr, const std::string& conc, double gpa, bool overloadPerm)
+        : major(maj), year(yr), concentration(conc), cGPA(gpa), canOverload(overloadPerm) {
+        checkProbationStatus();
+    }
+
+    // Input validation
     bool validateInput(const std::string& input, const json& validOptions, const std::string& type);
+
+    // Set student details
     bool setDetails(const json& data);
 
-    void setMajor(const std::string& gotmajor);
-    std::string getMajor() const;
+    // Getters and setters for major
+    void setMajor(const std::string& gotmajor) { major = gotmajor; }
+    std::string getMajor() const { return major; }
 
-    void setConcentration(const std::string& gotconcentration);
-    std::string getConcentration() const;
+    // Getters and setters for concentration
+    void setConcentration(const std::string& gotconcentration) { concentration = gotconcentration; }
+    std::string getConcentration() const { return concentration; }
 
-    void setyear(const std::string& gotyear);
-    std::string getyear() const;
+    // Getters and setters for year
+    void setyear(const std::string& gotyear) { year = gotyear; }
+    std::string getyear() const { return year; }
 
-    void setcGPA(const double gotcGPA);
-    std::string getcGPA() const;
+    // Getters and setters for cGPA
+    void setcGPA(const double gotcGPA) { cGPA = gotcGPA; checkProbationStatus(); }
+    double getcGPA() const { return cGPA; }
 
-    void setcanOverload(const bool gotsetcanOverload);
-    bool getcanOverload() const;
+    // Getters and setters for canOverload
+    void setcanOverload(const bool gotsetcanOverload) { canOverload = gotsetcanOverload; }
+    bool getcanOverload() const { return canOverload; }
 
-    void checkProbationStatus();
+    // Check probation status
+    void checkProbationStatus() { isOnProbation = (cGPA < 2.0); }
 };

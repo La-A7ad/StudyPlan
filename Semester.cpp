@@ -1,36 +1,66 @@
 #include "Semester.h"
-#include <algorithm>
+#include "StudyPlan.h"
 #include <iostream>
 
-bool Semester::canAddCourse(const Course& course) {
-    if (courses.size() >= maxCredits) {
-        std::cout << "Max credit limit reached for this semester.\n";
-        return false;
-    }
+Semester::Semester(std::string name, int credits)
+    : semesterName(name), maxCredits(credits) {}
 
-    // Check if the course exists in the catalog
-    if (Course::courseCatalog.find(course.title) == Course::courseCatalog.end()) {
-        std::cout << "Course does not exist in the catalog.\n";
-        return false;
-    }
-
-    // Check if prerequisites are met
-    for (const auto& prereq : course.prerequisites) {
-        if (std::find(courses.begin(), courses.end(), prereq) == courses.end()) {
-            std::cout << "Prerequisite " << prereq << " not met.\n";
-            return false;
+void Semester::addCourse(const Course& course, const StudyPlan& studyPlan) {
+    // Check if prerequisites are completed
+    for (const std::string& prereq : course.getPrerequisites()) {
+        bool completed = false;
+        for (const auto& sem : studyPlan.getSemesters()) {
+            if (sem->hasCourse(prereq)) {
+                completed = true;
+                break;
+            }
+        }
+        if (!completed) {
+            std::cout << "Prerequisite " << prereq << " for course " << course.getCode() << " not completed.\n";
+            return;
         }
     }
 
-    return true;
-}
+    // Check credit limits
+    int currentCredits = getTotalCredits();
+    int additionalCredits = course.getCredits();
+    bool isOnProbation = studyPlan.isStudentOnProbation();
 
-void Semester::addCourse(const Course& course, const StudyPlan& studyPlan) {
-    const auto& course = Course::courseCatalog.at(courseCode);
-    if (canAddCourse(course)) {
-        courses.push_back(courseCode);
-        std::cout << "Course " << courseCode << " added successfully.\n";
+    int maxCredits = 18;
+    if (isOnProbation) {
+        maxCredits = 12;
+        if (currentCredits + additionalCredits > maxCredits) {
+            std::cout << "Warning: You are on probation and can only register up to 12 credits.\n";
+        }
+    } else if (studyPlan.canOverload()) {
+        maxCredits = 21;
+        if (currentCredits + additionalCredits > 21) {
+            std::cout << "Cannot register more than 21 credits as an overloader.\n";
+            return;
+        }
+    } else if (currentCredits + additionalCredits > 18) {
+        std::cout << "Cannot register more than 18 credits.\n";
+        return;
     }
+
+    // Add the course
+    courses.push_back(course);
+    std::cout << "Course " << course.getCode() << " added successfully.\n";
 }
 
-bool addCourse(const Course& course, const StudyPlan& studyPlan);
+bool Semester::hasCourse(const std::string& courseCode) const {
+    for (const auto& course : courses) {
+        if (course.getCode() == courseCode) {
+            return true;
+        }
+    }
+    return false;
+}
+
+int Semester::getTotalCredits() const {
+    int totalCredits = 0;
+    for (const auto& course : courses) {
+        totalCredits += course.getCredits();
+    }
+    return totalCredits;
+}
