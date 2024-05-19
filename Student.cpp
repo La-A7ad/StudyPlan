@@ -1,77 +1,91 @@
 #include "Student.h"
 #include <iostream>
+#include <algorithm>
+#include <limits>
 
-// Validate input based on a JSON array of valid options
-bool Student::validateInput(const std::string& input, const json& validOptions, const std::string& type) {
-    if (validOptions.contains(input)) {
-        return true;
-    } else {
-        std::cout << "Invalid " << type << " provided.\n";
-        return false;
-    }
-}
+Student::Student() : cGPA(0.0), canOverload(false) {}
 
-// Set student details based on JSON data
+void Student::setMajor(const std::string& m) { major = m; }
+void Student::setYear(const std::string& y) { year = y; }
+void Student::setConcentration(const std::string& c) { concentration = c; }
+void Student::setCgpa(double g) { cGPA = g; }
+void Student::setCanOverload(bool o) { canOverload = o; }
+
+double Student::getcGPA() const { return cGPA; } // Getter implementation
+bool Student::getcanOverload() const { return canOverload; } // Getter implementation
+
 bool Student::setDetails(const json& data) {
-    if (data.contains("major") && data.contains("year") && data.contains("concentration") && 
-        data.contains("cGPA") && data.contains("canOverload")) {
+    while (true) {
+        std::cout << "Enter your major: ";
+        if (!(std::cin >> major)) {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cout << "Invalid input. Please try again.\n";
+            continue;
+        }
 
-        setMajor(data["major"]);
-        setyear(data["year"]);
-        setConcentration(data["concentration"]);
-        setcGPA(data["cGPA"]);
-        setcanOverload(data["canOverload"]);
-        checkProbationStatus();
+        std::cout << "Enter your concentration: ";
+        if (!(std::cin >> concentration)) {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cout << "Invalid input. Please try again.\n";
+            continue;
+        }
 
-        return true;
-    } else {
-        std::cout << "Invalid data provided.\n";
-        return false;
+        std::cout << "Enter your year: ";
+        if (!(std::cin >> year)) {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cout << "Invalid input. Please try again.\n";
+            continue;
+        }
+
+        auto majors = data["Majors"];
+        if (majors.contains(major) &&
+            std::find(majors[major]["Concentrations"].begin(), majors[major]["Concentrations"].end(), concentration) != majors[major]["Concentrations"].end()) {
+            auto years = data["Years"];
+            if (std::find(years.begin(), years.end(), year) != years.end()) {
+                break;
+            } else {
+                std::cout << "Invalid year entered. Please try again.\n";
+                continue;
+            }
+        } else {
+            std::cout << "Invalid major or concentration entered. Please try again.\n";
+            continue;
+        }
     }
+
+    std::cout << "Enter your cGPA: ";
+    std::cin >> cGPA;
+
+    if (validateMajorAndConcentration(major, concentration, data) && validateYear(year, data)) {
+        if (cGPA > 3.0) {
+            std::cout << "Are you able to overload? (1 for yes, 0 for no): ";
+            std::cin >> canOverload;
+        }
+        std::cout << "Student configured successfully." << std::endl;
+        return true;
+    }
+    std::cout << "Failed to configure student with provided data." << std::endl;
+    return false;
 }
 
-// Setters and getters for major
-void Student::setMajor(const std::string& gotmajor) {
-    major = gotmajor;
-}
-std::string Student::getMajor() const {
-    return major;
-}
-
-// Setters and getters for concentration
-void Student::setConcentration(const std::string& gotconcentration) {
-    concentration = gotconcentration;
-}
-std::string Student::getConcentration() const {
-    return concentration;
+bool Student::validateMajorAndConcentration(const std::string& major, const std::string& concentration, const json& data) {
+    auto majors = data["Majors"];
+    if (majors.contains(major) &&
+        std::find(majors[major]["Concentrations"].begin(), majors[major]["Concentrations"].end(), concentration) != majors[major]["Concentrations"].end()) {
+        return true;
+    }
+    std::cout << "Invalid major or concentration entered." << std::endl;
+    return false;
 }
 
-// Setters and getters for year
-void Student::setyear(const std::string& gotyear) {
-    year = gotyear;
-}
-std::string Student::getyear() const {
-    return year;
-}
-
-// Setters and getters for cGPA
-void Student::setcGPA(const double gotcGPA) {
-    cGPA = gotcGPA;
-    checkProbationStatus();
-}
-double Student::getcGPA() const {
-    return cGPA;
-}
-
-// Setters and getters for canOverload
-void Student::setcanOverload(const bool gotsetcanOverload) {
-    canOverload = gotsetcanOverload;
-}
-bool Student::getcanOverload() const {
-    return canOverload;
-}
-
-// Check probation status
-void Student::checkProbationStatus() {
-    isOnProbation = (cGPA < 2.0);
+bool Student::validateYear(const std::string& year, const json& data) {
+    auto years = data["Years"];
+    if (std::find(years.begin(), years.end(), year) != years.end()) {
+        return true;
+    }
+    std::cout << "Invalid year entered." << std::endl;
+    return false;
 }

@@ -13,29 +13,19 @@ private:
     std::string concentration;
     double cGPA;
     bool canOverload;
-    bool isOnProbation;
 
 public:
-    // Remove constructor
-    bool validateInput(const std::string& input, const json& validOptions, const std::string& type);
+    Student();
     bool setDetails(const json& data);
-
-    void setMajor(const std::string& gotmajor);
-    std::string getMajor() const;
-
-    void setConcentration(const std::string& gotconcentration);
-    std::string getConcentration() const;
-
-    void setyear(const std::string& gotyear);
-    std::string getyear() const;
-
-    void setcGPA(const double gotcGPA);
-    double getcGPA() const;
-
-    void setcanOverload(const bool gotsetcanOverload);
-    bool getcanOverload() const;
-
-    void checkProbationStatus();
+    void setMajor(const std::string& m);
+    void setYear(const std::string& y);
+    void setConcentration(const std::string& c);
+    void setCgpa(double g);
+    void setCanOverload(bool o);
+    double getcGPA() const; // Getter for cGPA
+    bool getcanOverload() const; // Getter for canOverload
+    bool validateMajorAndConcentration(const std::string& major, const std::string& concentration, const json& data);
+    bool validateYear(const std::string& year, const json& data);
 };
 
 #endif
