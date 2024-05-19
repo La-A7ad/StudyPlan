@@ -5,6 +5,7 @@ void StudyPlan::addSemester(const Semester& semester) {
     semesters.push_back(semester);
 }
 
+
 void StudyPlan::addCourseToSemester(const std::string& semesterName, const std::string& courseCode) {
     for (auto& semester : semesters) {
         if (semester.getName() == semesterName) {

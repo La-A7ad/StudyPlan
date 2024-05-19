@@ -3,6 +3,34 @@
 #include <limits>
 #include <algorithm>
 
+
+
+json loadData() {
+    // Assuming JSON data is in a string for demonstration; it could also be loaded from a file
+    std::string jsonData = R"({
+      "Majors": {
+        "DSAI": {
+          "Concentrations": ["DSAI"]
+        },
+        "SWD": {
+          "Concentrations": ["HCI", "APD", "GD"]
+        },
+        "IT": {
+          "Concentrations": ["NS", "CC"]
+        }
+      },
+      "Years": ["2022", "2023"],
+
+      "canOverload" : false
+
+
+    })";
+
+    json j = json::parse(jsonData);
+    return j;
+}
+
+
 bool Student::setDetails(const json& data) {
     while (true) {
         std::cout << "Enter your major: ";

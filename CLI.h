@@ -7,7 +7,6 @@
 #include <string>
 using json = nlohmann::json;
 
-json loadData(); 
 
 class CLI {
 private:

@@ -5,6 +5,8 @@
 #include "nlohmann/json.hpp"
 using json = nlohmann::json;
 
+json loadData();
+
 class Student {
 private:
     std::string major;

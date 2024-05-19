@@ -1,4 +1,5 @@
 #include "CLI.h"
+#include "Student.h"
 #include <iostream>
 #include <string>
 
@@ -19,7 +20,14 @@ void CLI::run() {
 
         if (command == "exit") {
             break;
-        } else if (command == "add_semester") {
+            
+        }
+        else if (command == "start") {
+            studentinput.setDetails(loadData());
+        } 
+        else if (command == "student") {
+            CLI::displayStudentData();
+            }else if (command == "mksem") {
             std::string semesterName;
             int maxCredits;
             std::cout << "Enter semester name: ";
@@ -30,21 +38,29 @@ void CLI::run() {
             Semester semester(semesterName, maxCredits);
             studyPlan.addSemester(semester);
             std::cout << "Semester " << semesterName << " added with max credits " << maxCredits << "." << std::endl;
-        } else if (command == "add_course") {
+        } else if (command == "addcourse") {
             std::string semesterName, courseCode;
             std::cout << "Enter semester name: ";
             std::getline(std::cin, semesterName);
             std::cout << "Enter course code: ";
             std::getline(std::cin, courseCode);
             studyPlan.addCourseToSemester(semesterName, courseCode);
-        } else if (command == "list_courses") {
+        } else if (command == "ls") {
             std::string semesterName;
             std::cout << "Enter semester name: ";
             std::getline(std::cin, semesterName);
             studyPlan.listCoursesInSemester(semesterName);
-        } else if (command == "enter_gpa_calc") {
+        } else if (command == "gpacalc") {
             enterGPACalcEnvironment();
-        } else {
+        } else if (command == "help") {
+            std::cout<<"insert start to initialise student"<<std::endl;
+            std::cout<<"inser exit to terminate program"<<std::endl;
+            std::cout<<"insert mksem to add a new semester"<<std::endl;
+            std::cout<<"insert addcourse to add a course to a semetser"<<std::endl;
+            std::cout<<"insert ls to list courses in a semester"<<std::endl;
+            std::cout<<"insert gpacalc to enter GPA calc"<<std::endl;
+        } 
+        else {
             std::cout << "Unknown command." << std::endl;
         }
     }
@@ -58,15 +74,23 @@ void CLI::enterGPACalcEnvironment() {
 
         if (command == "exit") {
             break;
-        } else if (command == "add_course") {
+        } else if (command == "addcourse") {
             addCourseToGPACalc();
-        } else if (command == "calc_weighted_gpa") {
+        } else if (command == "weightedgpa") {
             calculateWeightedGPA();
-        } else if (command == "calc_cumulative_gpa") {
+        } else if (command == "cumgpa") {
             calculateCumulativeGPA();
-        } else if (command == "list_courses") {
+        } else if (command == "ls") {
             listGPACalcCourses();
-        } else {
+    
+        } else if (command == "help") {
+            std::cout<<"insert addcourse to add a course"<<std::endl;
+            std::cout<<"insert weightedgpa to calculate weighted gpa"<<std::endl;
+            std::cout<<"insert cumgpa to calculated cumulative gpa"<<std::endl;
+            std::cout<<"insert ls to list all courses"<<std::endl;
+        
+        }
+        else {
             std::cout << "Unknown command." << std::endl;
         }
     }

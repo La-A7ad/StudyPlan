@@ -45,6 +45,8 @@ int Semester::getTotalCredits() const {
         totalCredits += course.getCreditHours();
     }
     return totalCredits;
+
+    //el function dah adds the courses totalcredit hours
 }
 
 //test
