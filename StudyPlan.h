@@ -12,6 +12,7 @@ private:
     Student student;
 
 public:
+    StudyPlan(const Student& student);
     StudyPlan() = default;
     void addSemester(const Semester& semester);
     void addCourseToSemester(const std::string& semesterName, const std::string& courseCode);

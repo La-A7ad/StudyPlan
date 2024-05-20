@@ -12,7 +12,7 @@ private:
     Student studentinput;  // Re-added the student input
     void displayStudentData();
     json loadData();       // Re-added json loader function
-
+    Student student;
 public:
     CLI();                 // Default constructor removed
     void run();
