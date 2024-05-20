@@ -1,9 +1,6 @@
 #include "Student.h"
-#include <iostream>
-#include <algorithm>
-#include <limits>
 
-Student::Student() : cGPA(0.0), canOverload(false) {}
+Student::Student() : cGPA(0.0), canOverload(false), isOnProbation(false) {}  // Initialize isOnProbation
 
 void Student::setMajor(const std::string& m) {
     major = m;
@@ -31,6 +28,7 @@ std::string Student::getYear() const {
 
 void Student::setcGPA(const double g) {
     cGPA = g;
+    checkProbationStatus();  // Check probation status whenever GPA is set
 }
 
 double Student::getcGPA() const {
@@ -48,6 +46,7 @@ bool Student::getcanOverload() const {
 bool Student::setDetails(const json& data) {
     // Implementation from your provided code
     // ...
+    return true;  // Ensure there's a return value
 }
 
 void Student::checkProbationStatus() {

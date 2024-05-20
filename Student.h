@@ -13,6 +13,7 @@ private:
     std::string concentration;
     double cGPA;
     bool canOverload;
+    bool isOnProbation;  // Ensure this is declared
 
 public:
     Student();

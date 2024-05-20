@@ -2,6 +2,10 @@
 #include "Course.h"
 #include <iostream>
 
+CLI::CLI() {
+    // Constructor implementation if needed
+}
+
 void CLI::displayStudentData() {
     std::cout << "Major: " << studentinput.getMajor() << std::endl;
     std::cout << "Concentration: " << studentinput.getConcentration() << std::endl;

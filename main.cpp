@@ -1,5 +1,4 @@
 #include "CLI.h"
-#include <iostream>
 
 int main() {
     CLI cli;

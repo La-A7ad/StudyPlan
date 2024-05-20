@@ -4,26 +4,21 @@
 #include "Student.h"
 #include "StudyPlan.h"
 #include "nlohmann/json.hpp"
-#include <string>
 
 using json = nlohmann::json;
 
+json loadData();  // Declare the loadData function
+
 class CLI {
 private:
-    Student student;
+    Student studentinput;
     StudyPlan studyPlan;
 
-    void printSlowly(const std::string& text, unsigned int milliseconds);
-    json loadData();
+    void displayStudentData();
 
 public:
-    CLI();
-
+    CLI();  // Declare the constructor explicitly
     void run();
-    void displayStudentData();
-    void searchCourses();
-    void addSemester();
-    void addCourseToSemester();
 };
 
 #endif
