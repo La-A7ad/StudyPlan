@@ -5,7 +5,6 @@
 #include <string>
 #include "Semester.h"
 #include "Student.h"
-#include <iostream>
 
 class StudyPlan {
 private:
@@ -13,13 +12,12 @@ private:
     Student student;
 
 public:
+    StudyPlan() = default;
+    void addSemester(const Semester& semester);
     void addCourseToSemester(const std::string& semesterName, const std::string& courseCode);
-    void addSemester(const Semester& newSemester); // Ensure this matches the definition
     bool isStudentOnProbation() const;
     bool canOverload() const;
-    std::vector<Semester>& getSemesters() const; // This should be marked as const
-
-
+    std::vector<Semester>& getSemesters();  // Fix the return type
 };
 
 #endif

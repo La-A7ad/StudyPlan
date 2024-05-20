@@ -1,9 +1,11 @@
 #ifndef SEMESTER_H
 #define SEMESTER_H
 
-#include <vector>
 #include <string>
+#include <vector>
 #include "Course.h"
+
+class StudyPlan;  // Forward declaration
 
 class Semester {
 private:
@@ -13,13 +15,11 @@ private:
 
 public:
     Semester(std::string name, int credits) : semesterName(name), maxCredits(credits) {}
-
     bool canAddCourse(const Course& course, const StudyPlan& studyPlan) const;
     void addCourse(const Course& course, const StudyPlan& studyPlan);
     int getTotalCredits() const;
     std::string getSemesterName() const;
-    const std::vector<Course>& getCourses() const; // Add this method
-
+    const std::vector<Course>& getCourses() const { return courses; }  // Add this getter
 };
 
 #endif

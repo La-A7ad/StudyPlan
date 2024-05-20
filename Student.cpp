@@ -56,3 +56,4 @@ bool Student::setDetails(const json& data) {
     std::cout << "Student configured successfully." << std::endl;
     return true;
 }
+
