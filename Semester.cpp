@@ -2,6 +2,10 @@
 #include "StudyPlan.h"
 #include <iostream>
 
+
+Semester::Semester(const std::string& name, int credits) 
+    : semesterName(name), maxCredits(credits) {}
+
 bool Semester::canAddCourse(const Course& course, const StudyPlan& studyPlan) const {
     for (const auto& sem : studyPlan.getSemesters()) {
         for (const auto& c : sem.getCourses()) {

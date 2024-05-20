@@ -17,7 +17,7 @@ public:
     void addCourseToSemester(const std::string& semesterName, const std::string& courseCode);
     bool isStudentOnProbation() const;
     bool canOverload() const;
-    const std::vector<Semester>& getSemesters() const; // Fix the return type
+    const std::vector<Semester>& getSemesters() const; 
 };
 
 #endif

@@ -1,78 +1,52 @@
+// CLI.cpp
 #include "CLI.h"
 #include <iostream>
-#include <string>
-
-
-CLI::CLI() : studentinput() { }
-
-json CLI::loadData() {
-    std::string jsonData = R"({
-      "Majors": {
-        "DSAI": {
-          "Concentrations": ["DSAI"]
-        },
-        "SWD": {
-          "Concentrations": ["HCI", "APD", "GD"]
-        },
-        "IT": {
-          "Concentrations": ["NS", "CC"]
-        }
-      },
-      "Years": ["2022", "2023"],
-      "canOverload": false
-    })";
-
-    return json::parse(jsonData);
-}
 
 void CLI::displayStudentData() {
-    std::cout << "Major: " << studentinput.getMajor() << "\n"
-              << "Concentration: " << studentinput.getConcentration() << "\n"
-              << "Year: " << studentinput.getYear() << "\n"
-              << "GPA: " << studentinput.getcGPA() << "\n"
-              << "Can Overload: " << (studentinput.getcanOverload() ? "Yes" : "No") << "\n";
+    std::cout << "Major: " << student.getMajor() << std::endl;
+    std::cout << "Concentration: " << student.getConcentration() << std::endl;
+    std::cout << "Year: " << student.getYear() << std::endl;
+    std::cout << "GPA: " << student.getcGPA() << std::endl;
+    std::cout << "Can Overload: " << (student.getcanOverload() ? "Yes" : "No") << std::endl;
 }
 
 void CLI::run() {
     std::string command;
-
     while (true) {
         std::cout << "-> ";
         std::getline(std::cin, command);
-
+        
         if (command == "exit") {
             break;
         } else if (command == "start") {
-            studentinput.setDetails(loadData());
+            student.setDetails(loadData());
         } else if (command == "student") {
             displayStudentData();
-        } else if (command == "search") {
-            std::string prefix;
-            std::cout << "Enter course code prefix: ";
-            std::getline(std::cin, prefix);
-            auto results = Course::searchCourse(prefix);
-            for (const auto& courseCode : results) {
-                std::cout << courseCode << "\n";
-            }
         } else if (command == "add_semester") {
             std::string semesterName;
             int maxCredits;
             std::cout << "Enter semester name: ";
-            std::getline(std::cin, semesterName);
+            std::cin >> semesterName;
             std::cout << "Enter maximum credits: ";
             std::cin >> maxCredits;
-            std::cin.ignore();  // to ignore the newline character after integer input
             studyPlan.addSemester(Semester(semesterName, maxCredits));
-            std::cout << "Semester " << semesterName << " added with max credits " << maxCredits << ".\n";
+            std::cout << "Semester " << semesterName << " added with max credits " << maxCredits << "." << std::endl;
         } else if (command == "add_course") {
             std::string semesterName, courseCode;
             std::cout << "Enter semester name: ";
-            std::getline(std::cin, semesterName);
+            std::cin >> semesterName;
             std::cout << "Enter course code: ";
-            std::getline(std::cin, courseCode);
+            std::cin >> courseCode;
             studyPlan.addCourseToSemester(semesterName, courseCode);
+            std::cout << "Course " << courseCode << " added to semester " << semesterName << "." << std::endl;
+        } else if (command.rfind("search ", 0) == 0) {
+            std::string prefix = command.substr(7);
+            auto results = Course::searchCourse(prefix);
+            for (const auto& result : results) {
+                std::cout << result << std::endl;
+            }
         } else {
-            std::cout << "Unknown command.\n";
+            std::cout << "Unknown command." << std::endl;
         }
     }
 }

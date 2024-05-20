@@ -1,6 +1,8 @@
 #include "StudyPlan.h"
 #include <iostream>
 
+StudyPlan::StudyPlan(const Student& student) : student(student) {}
+
 void StudyPlan::addSemester(const Semester& semester) {
     semesters.push_back(semester);
 }

@@ -14,7 +14,7 @@ private:
     std::vector<Course> courses;
 
 public:
-    Semester(std::string name, int credits);
+    Semester(const std::string& name, int credits);
     bool canAddCourse(const Course& course, const StudyPlan& studyPlan) const;
     void addCourse(const Course& course, const StudyPlan& studyPlan);
     int getTotalCredits() const;
