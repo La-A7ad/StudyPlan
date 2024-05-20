@@ -1,8 +1,9 @@
 #include "Semester.h"
 #include "StudyPlan.h"
 #include "Course.h"
+#include <iostream>
 
-bool Semester::canAddCourse(const Course& course, const StudyPlan& studyPlan) {
+bool Semester::canAddCourse(const Course& course, const StudyPlan& studyPlan) const {
     for (const auto& semester : studyPlan.getSemesters()) {
         for (const auto& completedCourse : semester.getCourses()) {
             if (std::find(course.getPrerequisites().begin(), course.getPrerequisites().end(), completedCourse.getCode()) != course.getPrerequisites().end()) {
@@ -38,4 +39,20 @@ void Semester::addCourse(const Course& course, const StudyPlan& studyPlan) {
     // Add the course
     courses.push_back(course);
     std::cout << "Course " << course.getCode() << " added successfully.\n";
+}
+
+const std::vector<Course>& Semester::getCourses() const {
+    return courses;
+}
+
+int Semester::getTotalCredits() const {
+    int totalCredits = 0;
+    for (const auto& course : courses) {
+        totalCredits += course.getCredits();
+    }
+    return totalCredits;
+}
+
+std::string Semester::getSemesterName() const {
+    return semesterName;
 }

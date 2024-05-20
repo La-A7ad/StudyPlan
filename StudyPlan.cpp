@@ -1,3 +1,4 @@
+#include <iostream> // Add this line
 #include "StudyPlan.h"
 #include "Course.h"
 
@@ -20,6 +21,7 @@ void StudyPlan::addSemester(const Semester& newSemester) {
     semesters.push_back(newSemester);
 }
 
+
 bool StudyPlan::isStudentOnProbation() const {
     return student->getcGPA() < 2.0;
 }
@@ -31,4 +33,3 @@ bool StudyPlan::canOverload() const {
 std::vector<Semester>& StudyPlan::getSemesters() const {
     return semesters;
 }
-
