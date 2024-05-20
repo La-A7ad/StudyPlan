@@ -2,19 +2,28 @@
 #define CLI_H
 
 #include "Student.h"
-#include <string>
+#include "StudyPlan.h"
 #include "nlohmann/json.hpp"
+#include <string>
 
 using json = nlohmann::json;
 
 class CLI {
 private:
-    Student studentinput;
+    Student student;
+    StudyPlan studyPlan;
+
     void printSlowly(const std::string& text, unsigned int milliseconds);
     json loadData();
 
 public:
+    CLI();
+
     void run();
+    void displayStudentData();
+    void searchCourses();
+    void addSemester();
+    void addCourseToSemester();
 };
 
 #endif

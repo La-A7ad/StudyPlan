@@ -6,21 +6,22 @@
 #include <map>
 
 class Course {
-private:
-    std::string code;
+public:
+    std::string name;
     int credits;
     std::vector<std::string> prerequisites;
 
-public:
-    Course(std::string c, int cr, std::vector<std::string> prereqs)
-        : code(c), credits(cr), prerequisites(prereqs) {}
+    Course() = default;
+    Course(std::string name, int credits, std::vector<std::string> prerequisites);
 
-    std::string getCode() const { return code; }
-    int getCredits() const { return credits; }
-    const std::vector<std::string>& getPrerequisites() const { return prerequisites; }
+    static std::map<std::string, Course> courseCatalog;
 
-    static std::map<std::string, Course> courseCatalog;  // Static member declaration
-    static std::vector<std::string> searchCourse(const std::string& courseCodePrefix); // Declaration
+    static std::vector<std::string> searchCourse(const std::string& courseCodePrefix);
+
+    // Add getter methods
+    const std::vector<std::string>& getPrerequisites() const;
+    const std::string& getCode() const;
+    int getCredits() const;
 };
 
 #endif
