@@ -8,13 +8,15 @@
 class StudyPlan {
 private:
     std::vector<Semester> semesters;
+    Student student;  // Declare the student member if necessary
 
 public:
-    StudyPlan() = default;  // Default constructor
-    void addSemester(const Semester& semester);
+    StudyPlan() = default;
+    void addSemester(const Semester& newSemester);
     void addCourseToSemester(const std::string& semesterName, const std::string& courseCode);
     bool isStudentOnProbation() const;
     bool canOverload() const;
+    std::vector<Semester>& getSemesters();  // Add this method
 };
 
 #endif

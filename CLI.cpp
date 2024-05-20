@@ -1,5 +1,6 @@
 #include "CLI.h"
 #include "Course.h"
+#include "Student.h" // Include necessary headers for Student and loadData
 #include <iostream>
 
 CLI::CLI() {

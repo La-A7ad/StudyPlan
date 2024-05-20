@@ -7,7 +7,7 @@
 
 using json = nlohmann::json;
 
-json loadData();  // Declare the loadData function
+json loadData();
 
 class CLI {
 private:
@@ -17,7 +17,7 @@ private:
     void displayStudentData();
 
 public:
-    CLI();  // Declare the constructor explicitly
+    CLI();  // Constructor
     void run();
 };
 
