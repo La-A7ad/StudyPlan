@@ -22,13 +22,13 @@ void StudyPlan::addCourseToSemester(const std::string& semesterName, const std::
 }
 
 bool StudyPlan::isStudentOnProbation() const {
-    return student.getcGPA() < 2.0;
+    return student.getcGPA() < 2.0;  // Use . instead of ->
 }
 
 bool StudyPlan::canOverload() const {
-    return student.getcanOverload();
+    return student.getcanOverload();  // Use . instead of ->
 }
 
-std::vector<Semester>& StudyPlan::getSemesters() {
+const std::vector<Semester>& StudyPlan::getSemesters() const {
     return semesters;
 }

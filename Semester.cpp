@@ -52,3 +52,7 @@ int Semester::getTotalCredits() const {
 std::string Semester::getSemesterName() const {
     return semesterName;
 }
+
+const std::vector<Course>& Semester::getCourses() const {
+    return courses;
+}

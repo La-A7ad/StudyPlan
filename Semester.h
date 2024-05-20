@@ -14,12 +14,12 @@ private:
     std::vector<Course> courses;
 
 public:
-    Semester(std::string name, int credits) : semesterName(name), maxCredits(credits) {}
+    Semester(std::string name, int credits);
     bool canAddCourse(const Course& course, const StudyPlan& studyPlan) const;
     void addCourse(const Course& course, const StudyPlan& studyPlan);
     int getTotalCredits() const;
     std::string getSemesterName() const;
-    const std::vector<Course>& getCourses() const { return courses; }  // Add this getter
+    const std::vector<Course>& getCourses() const;  // Getter for courses
 };
 
 #endif
