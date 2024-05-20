@@ -1,8 +1,7 @@
 #include "CLI.h"
 #include <iostream>
 #include <string>
-#include <chrono>
-#include <thread>
+
 
 CLI::CLI() : studentinput() { }
 
