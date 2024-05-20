@@ -2,6 +2,26 @@
 #include "CLI.h"
 #include <iostream>
 
+json loadData() {
+    std::string jsonData = R"({
+      "Majors": {
+        "DSAI": {
+          "Concentrations": ["DSAI"]
+        },
+        "SWD": {
+          "Concentrations": ["HCI", "APD", "GD"]
+        },
+        "IT": {
+          "Concentrations": ["NS", "CC"]
+        }
+      },
+      "Years": ["2022", "2023"],
+      "canOverload": false
+    })";
+    return json::parse(jsonData);
+}
+
+
 void CLI::displayStudentData() {
     std::cout << "Major: " << student.getMajor() << std::endl;
     std::cout << "Concentration: " << student.getConcentration() << std::endl;

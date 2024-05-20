@@ -6,15 +6,16 @@
 #include "nlohmann/json.hpp"
 using json = nlohmann::json;
 
+json loadData(); 
+
 class CLI {
 private:
     StudyPlan studyPlan;
     Student studentinput;  // Re-added the student input
-    void displayStudentData();
-    json loadData();       // Re-added json loader function
+    void displayStudentData();      // Re-added json loader function
     Student student;
 public:
-    CLI();                 // Default constructor removed
+    CLI() = default;
     void run();
 };
 
