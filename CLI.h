@@ -1,23 +1,20 @@
 #ifndef CLI_H
 #define CLI_H
 
-#include "Student.h"
 #include "StudyPlan.h"
+#include "Student.h"
 #include "nlohmann/json.hpp"
-
 using json = nlohmann::json;
-
-json loadData();
 
 class CLI {
 private:
-    Student studentinput;
     StudyPlan studyPlan;
-
+    Student studentinput;  // Re-added the student input
     void displayStudentData();
+    json loadData();       // Re-added json loader function
 
 public:
-    CLI();  // Constructor
+    CLI();                 // Default constructor removed
     void run();
 };
 

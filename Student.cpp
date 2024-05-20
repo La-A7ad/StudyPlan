@@ -1,54 +1,58 @@
 #include "Student.h"
-
-Student::Student() : cGPA(0.0), canOverload(false), isOnProbation(false) {}  // Initialize isOnProbation
-
-void Student::setMajor(const std::string& m) {
-    major = m;
-}
-
-std::string Student::getMajor() const {
-    return major;
-}
-
-void Student::setConcentration(const std::string& c) {
-    concentration = c;
-}
-
-std::string Student::getConcentration() const {
-    return concentration;
-}
-
-void Student::setYear(const std::string& y) {
-    year = y;
-}
-
-std::string Student::getYear() const {
-    return year;
-}
-
-void Student::setcGPA(const double g) {
-    cGPA = g;
-    checkProbationStatus();  // Check probation status whenever GPA is set
-}
-
-double Student::getcGPA() const {
-    return cGPA;
-}
-
-void Student::setcanOverload(const bool o) {
-    canOverload = o;
-}
-
-bool Student::getcanOverload() const {
-    return canOverload;
-}
+#include <iostream>
+#include <limits>
+#include <algorithm>
 
 bool Student::setDetails(const json& data) {
-    // Implementation from your provided code
-    // ...
-    return true;  // Ensure there's a return value
-}
+    while (true) {
+        std::cout << "Enter your major: ";
+        if (!(std::cin >> major)) {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cout << "Invalid input. Please try again.\n";
+            continue;
+        }
 
-void Student::checkProbationStatus() {
-    isOnProbation = (cGPA < 2.0);
+        std::cout << "Enter your concentration: ";
+        if (!(std::cin >> concentration)) {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cout << "Invalid input. Please try again.\n";
+            continue;
+        }
+
+        std::cout << "Enter your year: ";
+        if (!(std::cin >> year)) {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cout << "Invalid input. Please try again.\n";
+            continue;
+        }
+
+        auto majors = data["Majors"];
+        if (majors.contains(major) &&
+            std::find(majors[major]["Concentrations"].begin(), majors[major]["Concentrations"].end(), concentration) != majors[major]["Concentrations"].end()) {
+            auto years = data["Years"];
+            if (std::find(years.begin(), years.end(), year) != years.end()) {
+                break;
+            } else {
+                std::cout << "Invalid year entered. Please try again.\n";
+                continue;
+            }
+        } else {
+            std::cout << "Invalid major or concentration entered. Please try again.\n";
+            continue;
+        }
+    }
+
+    std::cout << "Enter your cGPA: ";
+    std::cin >> cGPA;
+
+    if (cGPA > 3.0) {
+        std::cout << "Are you able to overload? (1 for yes, 0 for no): ";
+        std::cin >> canOverload;
+    }
+
+    std::cout << "Student configured successfully." << std::endl;
+    return true;
 }

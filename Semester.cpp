@@ -36,7 +36,7 @@ void Semester::addCourse(const Course& course, const StudyPlan& studyPlan) {
         return;
     }
 
-    // Add the course
+    // Add the course to the semester
     courses.push_back(course);
     std::cout << "Course " << course.getCode() << " added successfully.\n";
 }
