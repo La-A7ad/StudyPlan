@@ -1,30 +1,19 @@
 #include "Semester.h"
 #include "StudyPlan.h"
 #include "Course.h"
-#include <iostream>
-
-Semester::Semester(std::string name, int credits) : semesterName(std::move(name)), maxCredits(credits) {}
 
 bool Semester::canAddCourse(const Course& course, const StudyPlan& studyPlan) {
-    // Check if prerequisites are met
-    const auto& prerequisites = course.getPrerequisites();
-    for (const auto& prereq : prerequisites) {
-        bool found = false;
-        for (const auto& prevSemester : studyPlan.getSemesters()) {
-            for (const auto& takenCourse : prevSemester->courses) {
-                if (takenCourse.getCode() == prereq) {
-                    found = true;
-                    break;
-                }
+    for (const auto& semester : studyPlan.getSemesters()) {
+        for (const auto& completedCourse : semester.getCourses()) {
+            if (std::find(course.getPrerequisites().begin(), course.getPrerequisites().end(), completedCourse.getCode()) != course.getPrerequisites().end()) {
+                return true;
             }
-            if (found) break;
-        }
-        if (!found) {
-            std::cout << "Prerequisite " << prereq << " not met for course " << course.getCode() << ".\n";
-            return false;
         }
     }
+    return false;
+}
 
+void Semester::addCourse(const Course& course, const StudyPlan& studyPlan) {
     int currentCredits = getTotalCredits();
     int additionalCredits = course.getCredits();
     bool isOnProbation = studyPlan.isStudentOnProbation();
@@ -39,31 +28,14 @@ bool Semester::canAddCourse(const Course& course, const StudyPlan& studyPlan) {
         maxCredits = 21;
         if (currentCredits + additionalCredits > 21) {
             std::cout << "Cannot register more than 21 credits as an overloader.\n";
-            return false;
+            return;
         }
     } else if (currentCredits + additionalCredits > 18) {
         std::cout << "Cannot register more than 18 credits.\n";
-        return false;
+        return;
     }
 
-    return true;
-}
-
-void Semester::addCourse(const Course& course, const StudyPlan& studyPlan) {
-    if (canAddCourse(course, studyPlan)) {
-        courses.push_back(course);
-        std::cout << "Course " << course.getCode() << " added successfully.\n";
-    }
-}
-
-int Semester::getTotalCredits() const {
-    int totalCredits = 0;
-    for (const auto& course : courses) {
-        totalCredits += course.getCredits();
-    }
-    return totalCredits;
-}
-
-std::string Semester::getSemesterName() const {
-    return semesterName;
+    // Add the course
+    courses.push_back(course);
+    std::cout << "Course " << course.getCode() << " added successfully.\n";
 }

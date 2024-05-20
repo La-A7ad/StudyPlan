@@ -1,22 +1,23 @@
 #ifndef STUDYPLAN_H
 #define STUDYPLAN_H
 
-#include "Semester.h"
 #include <vector>
 #include <string>
+#include "Semester.h"
+#include "Student.h"
 
 class StudyPlan {
 private:
     std::vector<Semester> semesters;
-    Student student;  // Declare the student member if necessary
+    Student* student;
 
 public:
-    StudyPlan() = default;
-    void addSemester(const Semester& newSemester);
     void addCourseToSemester(const std::string& semesterName, const std::string& courseCode);
+    void addSemester(const Semester& newSemester);
     bool isStudentOnProbation() const;
     bool canOverload() const;
-    std::vector<Semester>& getSemesters();  // Add this method
+    std::vector<Semester>& getSemesters() const; // Added & for returning reference
+
 };
 
 #endif

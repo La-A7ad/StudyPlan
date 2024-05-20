@@ -1,9 +1,8 @@
 #include "StudyPlan.h"
 #include "Course.h"
-#include <iostream>
 
 void StudyPlan::addCourseToSemester(const std::string& semesterName, const std::string& courseCode) {
-    for (auto& semester : semesters) {
+    for (auto& semester : semesters) { // Use reference here
         if (semester.getSemesterName() == semesterName) {
             auto it = Course::courseCatalog.find(courseCode);
             if (it != Course::courseCatalog.end()) {
@@ -22,13 +21,14 @@ void StudyPlan::addSemester(const Semester& newSemester) {
 }
 
 bool StudyPlan::isStudentOnProbation() const {
-    return student.getcGPA() < 2.0;  // Ensure getcGPA() is accessible
+    return student->getcGPA() < 2.0;
 }
 
 bool StudyPlan::canOverload() const {
-    return student.getcanOverload();  // Ensure getcanOverload() is accessible
+    return student->getcanOverload();
 }
 
-std::vector<Semester>& StudyPlan::getSemesters() {
+std::vector<Semester>& StudyPlan::getSemesters() const {
     return semesters;
 }
+
