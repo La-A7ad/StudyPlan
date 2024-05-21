@@ -12,13 +12,9 @@ private:
     Student student;
 
 public:
-    StudyPlan(const Student& student);
-    StudyPlan() = default;
     void addSemester(const Semester& semester);
     void addCourseToSemester(const std::string& semesterName, const std::string& courseCode);
-    bool isStudentOnProbation() const;
-    bool canOverload() const;
-    const std::vector<Semester>& getSemesters() const; 
+    void listCoursesInSemester(const std::string& semesterName) const;
 };
 
-#endif
+#endif // STUDYPLAN_H

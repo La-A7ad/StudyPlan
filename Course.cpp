@@ -95,7 +95,7 @@ std::map<std::string, Course> Course::courseCatalog = {
     {"MATH205", {"Discrete Mathematics for Computational Sciences", 3, {}}},
     {"MATH404", {"Linear and Nonlinear Programming", 3, {"MATH103"}}},
     {"PHYS103", {"Physics 1", 3, {"MATH103"}} },
-      {"PHYS104", {"Physics 2", 3, {"PHYS103"}}},
+    {"PHYS104", {"Physics 2", 3, {"PHYS103"}}},
     {"SCH163", {"Sustainability, Social and Ethical Issues in Computing", 2, {}}},
     {"SCH261", {"Engineering Project Management", 2, {}}},
     {"SCH264", {"Entrepreneurship and Small Business Management", 2, {}}},

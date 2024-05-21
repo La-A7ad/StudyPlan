@@ -9,17 +9,20 @@ class StudyPlan;  // Forward declaration
 
 class Semester {
 private:
-    std::string semesterName;
+    std::string name;
     int maxCredits;
     std::vector<Course> courses;
 
 public:
-    Semester(const std::string& name, int credits);
-    bool canAddCourse(const Course& course, const StudyPlan& studyPlan) const;
-    void addCourse(const Course& course, const StudyPlan& studyPlan);
+    Semester(const std::string& name, int maxCredits);
+
+    bool addCourse(const Course& course);
+    void listCourses() const;
+
+    const std::string& getName() const;
+    int getMaxCredits() const;
     int getTotalCredits() const;
-    std::string getSemesterName() const;
-    const std::vector<Course>& getCourses() const;  // Getter for courses
+    const std::vector<Course>& getCourses() const;
 };
 
-#endif
+#endif // SEMESTER_H

@@ -1,60 +1,41 @@
 #include "Semester.h"
-#include "StudyPlan.h"
 #include <iostream>
 
+Semester::Semester(const std::string& name, int maxCredits)
+    : name(name), maxCredits(maxCredits) {}
 
-Semester::Semester(const std::string& name, int credits) 
-    : semesterName(name), maxCredits(credits) {}
-
-bool Semester::canAddCourse(const Course& course, const StudyPlan& studyPlan) const {
-    for (const auto& sem : studyPlan.getSemesters()) {
-        for (const auto& c : sem.getCourses()) {
-            for (const auto& prereq : course.getPrerequisites()) {
-                if (prereq == c.getCode()) {
-                    return true;
-                }
-            }
-        }
+bool Semester::addCourse(const Course& course) {
+    int currentCredits = getTotalCredits();
+    if (currentCredits + course.getCreditHours() <= maxCredits) {
+        courses.push_back(course);
+        return true;
+    } else {
+        std::cout << "Cannot add course " << course.getCode() << " - exceeds maximum credits." << std::endl;
+        return false;
     }
-    return false;
 }
 
-void Semester::addCourse(const Course& course, const StudyPlan& studyPlan) {
-    if (!canAddCourse(course, studyPlan)) {
-        std::cout << "Cannot add course " << course.getCode() << " due to unmet prerequisites.\n";
-        return;
+void Semester::listCourses() const {
+    std::cout << "Courses in " << name << " semester:" << std::endl;
+    for (const auto& course : courses) {
+        std::cout << course.getCode() << ": " << course.getTitle() << " (" << course.getCreditHours() << " credits)" << std::endl;
     }
+}
 
-    int currentCredits = getTotalCredits();
-    int additionalCredits = course.getCredits();
-    bool isOnProbation = studyPlan.isStudentOnProbation();
-    int maxCredits = 18;
+const std::string& Semester::getName() const {
+    return name;
+}
 
-    if (isOnProbation) {
-        maxCredits = 12;
-    } else if (studyPlan.canOverload()) {
-        maxCredits = 21;
-    }
-
-    if (currentCredits + additionalCredits > maxCredits) {
-        std::cout << "Cannot register more than " << maxCredits << " credits.\n";
-        return;
-    }
-
-    courses.push_back(course);
-    std::cout << "Course " << course.getCode() << " added successfully.\n";
+int Semester::getMaxCredits() const {
+    return maxCredits;
 }
 
 int Semester::getTotalCredits() const {
     int totalCredits = 0;
     for (const auto& course : courses) {
-        totalCredits += course.getCredits();
+        totalCredits += course.getCreditHours();
     }
     return totalCredits;
-}
-
-std::string Semester::getSemesterName() const {
-    return semesterName;
 }
 
 const std::vector<Course>& Semester::getCourses() const {
