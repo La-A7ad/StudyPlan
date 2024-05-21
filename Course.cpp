@@ -137,6 +137,7 @@ std::map<std::string, Course> Course::courseCatalog = {
 Course::Course(std::string code, std::string title, int creditHours, std::vector<std::string> prerequisites)
     : code(code), title(title), creditHours(creditHours), prerequisites(prerequisites) {}
 
+
 const std::vector<std::string>& Course::getPrerequisites() const {
     return prerequisites;
 }
