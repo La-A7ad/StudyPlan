@@ -1,6 +1,5 @@
 #ifndef CLI_H
 #define CLI_H
-
 #include "StudyPlan.h"
 #include "Student.h"
 #include "nlohmann/json.hpp"
