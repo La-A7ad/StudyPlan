@@ -6,13 +6,15 @@
 #include <map>
 
 class Course {
-public:
-    std::string name;
-    int credits;
+private:
+    std::string code;
+    std::string title;
+    int creditHours;
     std::vector<std::string> prerequisites;
 
+public:
     Course() = default;
-    Course(std::string name, int credits, std::vector<std::string> prerequisites);
+    Course(std::string code, std::string title, int creditHours, std::vector<std::string> prerequisites);
 
     static std::map<std::string, Course> courseCatalog;
 
@@ -21,7 +23,8 @@ public:
     // Add getter methods
     const std::vector<std::string>& getPrerequisites() const;
     const std::string& getCode() const;
-    int getCredits() const;
+    const std::string& getTitle() const;
+    int getCreditHours() const;
 };
 
 #endif

@@ -1,5 +1,6 @@
 #include "Course.h"
 
+
 std::map<std::string, Course> Course::courseCatalog = {
     {"CSAI100", {"Introduction to Computational Sciences and AI", 1, {}}},
     {"CSAI101", {"Fundamentals of Programming and Computer Science", 2, {}}},
@@ -137,8 +138,24 @@ std::map<std::string, Course> Course::courseCatalog = {
 
 
 
-Course::Course(std::string name, int credits, std::vector<std::string> prerequisites)
-    : name(std::move(name)), credits(credits), prerequisites(std::move(prerequisites)) {}
+Course::Course(std::string code, std::string title, int creditHours, std::vector<std::string> prerequisites)
+    : code(code), title(title), creditHours(creditHours), prerequisites(prerequisites) {}
+
+const std::vector<std::string>& Course::getPrerequisites() const {
+    return prerequisites;
+}
+
+const std::string& Course::getCode() const {
+    return code;
+}
+
+const std::string& Course::getTitle() const {
+    return title;
+}
+
+int Course::getCreditHours() const {
+    return creditHours;
+}
 
 std::vector<std::string> Course::searchCourse(const std::string& courseCodePrefix) {
     std::vector<std::string> results;
@@ -148,22 +165,4 @@ std::vector<std::string> Course::searchCourse(const std::string& courseCodePrefi
         }
     }
     return results;
-}
-
-const std::vector<std::string>& Course::getPrerequisites() const {
-    return prerequisites;
-}
-
-const std::string& Course::getCode() const {
-    static std::string empty;
-    for (const auto& [courseCode, courseDetails] : courseCatalog) {
-        if (&courseDetails == this) {
-            return courseCode;
-        }
-    }
-    return empty;
-}
-
-int Course::getCredits() const {
-    return credits;
 }
