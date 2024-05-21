@@ -1,6 +1,6 @@
 #include "Course.h"
 
-
+// Static member initialization
 std::map<std::string, Course> Course::courseCatalog = {
     {"CSAI100", {"Introduction to Computational Sciences and AI", 1, {}}},
     {"CSAI101", {"Fundamentals of Programming and Computer Science", 2, {}}},
@@ -133,10 +133,6 @@ std::map<std::string, Course> Course::courseCatalog = {
     {"SWHCI452", {"Designing Extended Reality Experience", 3, {"SW251"}}},
     {"SWHCI453", {"Human Factors", 3, {}}},
 };
-
-
-
-
 
 Course::Course(std::string code, std::string title, int creditHours, std::vector<std::string> prerequisites)
     : code(code), title(title), creditHours(creditHours), prerequisites(prerequisites) {}

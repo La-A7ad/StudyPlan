@@ -15,14 +15,13 @@ private:
 
 public:
     Semester(const std::string& name, int maxCredits);
-
     bool addCourse(const Course& course);
     void listCourses() const;
 
-    const std::string& getName() const;
+    const std::string& getName() const;  // Add this method
     int getMaxCredits() const;
     int getTotalCredits() const;
-    const std::vector<Course>& getCourses() const;
+    const std::vector<Course>& getCourses() const;  // Getter for courses
 };
 
-#endif // SEMESTER_H
+#endif
