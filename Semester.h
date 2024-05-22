@@ -4,8 +4,7 @@
 #include <string>
 #include <vector>
 #include "Course.h"
-
-class StudyPlan;  // Forward declaration
+#include "StudyPlan.h"
 
 class Semester {
 private:
@@ -15,13 +14,13 @@ private:
 
 public:
     Semester(const std::string& name, int maxCredits);
-    bool addCourse(const Course& course);
+
+    bool addCourse(const Course& course, const StudyPlan& studyPlan);
     void listCourses() const;
 
-    const std::string& getName() const;  // Add this method
+    const std::string& getName() const;
     int getMaxCredits() const;
     int getTotalCredits() const;
-    const std::vector<Course>& getCourses() const;  // Getter for courses
 };
 
 #endif

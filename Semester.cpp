@@ -4,7 +4,15 @@
 Semester::Semester(const std::string& name, int maxCredits)
     : name(name), maxCredits(maxCredits) {}
 
-bool Semester::addCourse(const Course& course) {
+bool Semester::addCourse(const Course& course, const StudyPlan& studyPlan) {
+    // Check if all prerequisites are completed
+    for (const auto& prereq : course.getPrerequisites()) {
+        if (!studyPlan.hasCompletedCourse(prereq)) {
+            std::cout << "Cannot add course " << course.getCode() << " - prerequisite " << prereq << " not completed." << std::endl;
+            return false;
+        }
+    }
+
     int currentCredits = getTotalCredits();
     if (currentCredits + course.getCreditHours() <= maxCredits) {
         courses.push_back(course);
@@ -36,8 +44,4 @@ int Semester::getTotalCredits() const {
         totalCredits += course.getCreditHours();
     }
     return totalCredits;
-}
-
-const std::vector<Course>& Semester::getCourses() const {
-    return courses;
 }

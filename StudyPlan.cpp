@@ -10,8 +10,9 @@ void StudyPlan::addCourseToSemester(const std::string& semesterName, const std::
         if (semester.getName() == semesterName) {
             auto it = Course::courseCatalog.find(courseCode);
             if (it != Course::courseCatalog.end()) {
-                if (semester.addCourse(it->second)) {
+                if (semester.addCourse(it->second, *this)) {
                     std::cout << "Course " << courseCode << " added to " << semesterName << " semester." << std::endl;
+                    markCourseAsCompleted(courseCode); // Mark course as completed
                 } else {
                     std::cout << "Failed to add course " << courseCode << " to " << semesterName << " semester." << std::endl;
                 }
@@ -32,4 +33,16 @@ void StudyPlan::listCoursesInSemester(const std::string& semesterName) const {
         }
     }
     std::cout << "Semester " << semesterName << " not found." << std::endl;
+}
+
+bool StudyPlan::hasCompletedCourse(const std::string& courseCode) const {
+    return completedCourses.find(courseCode) != completedCourses.end();
+}
+
+void StudyPlan::markCourseAsCompleted(const std::string& courseCode) {
+    completedCourses.insert(courseCode);
+}
+
+const std::vector<Semester>& StudyPlan::getSemesters() const {
+    return semesters;
 }
