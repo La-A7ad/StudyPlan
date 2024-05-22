@@ -18,7 +18,8 @@ public:
 
     static std::map<std::string, Course> courseCatalog;
 
-     const std::string& getCode() const;
+    // Getter methods
+    const std::string& getCode() const;
     const std::string& getTitle() const;
     int getCreditHours() const;
     const std::vector<std::string>& getPrerequisites() const;
@@ -26,4 +27,5 @@ public:
     static std::vector<std::string> searchCourse(const std::string& courseCodePrefix);
 };
 
-#endif // COURSE_H
+#endif
+
