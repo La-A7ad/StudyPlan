@@ -19,6 +19,11 @@ private:
 public:
     CLI() = default;
     void run();
+    void enterGPACalcEnvironment();
+    void addCourseToGPACalc();
+    void calculateWeightedGPA();
+    void calculateCumulativeGPA();
+    void listGPACalcCourses();
 };
 
 #endif
