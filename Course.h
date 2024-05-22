@@ -21,6 +21,8 @@ public:
     const std::string& getCode() const;
     const std::string& getTitle() const;
     int getCreditHours() const;
+    static std::vector<std::string> searchCourse(const std::string& courseCodePrefix);
+
     
 };
 
