@@ -28,10 +28,6 @@ Course::Course(std::string code, std::string title, int creditHours, std::vector
     : code(code), title(title), creditHours(creditHours), prerequisites(prerequisites) {}
 
 
-const std::vector<std::string>& Course::getPrerequisites() const {
-    return prerequisites;
-}
-
 const std::string& Course::getCode() const {
     return code;
 }
@@ -42,6 +38,10 @@ const std::string& Course::getTitle() const {
 
 int Course::getCreditHours() const {
     return creditHours;
+}
+
+const std::vector<std::string>& Course::getPrerequisites() const {
+    return prerequisites;
 }
 
 std::vector<std::string> Course::searchCourse(const std::string& courseCodePrefix) {

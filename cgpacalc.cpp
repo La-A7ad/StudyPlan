@@ -1,4 +1,5 @@
 #include "cgpacalc.h"
+#include "Course.h"
 #include <iostream>
 
 float GPACalculator::getGradePoints(const std::string& letterGrade) const {
@@ -27,8 +28,8 @@ std::pair<float, int> GPACalculator::calculateWeightedGPA(const std::string& sem
             const Course& course = courseInstance.first;
             const std::string& grade = courseInstance.second;
             float gradePoints = getGradePoints(grade);
-            totalGradePoints += gradePoints * course.credits;
-            totalCreditHours += course.credits;
+            totalGradePoints += gradePoints * course.getCreditHours();
+            totalCreditHours += course.getCreditHours();
         }
     }
 
@@ -45,8 +46,8 @@ float GPACalculator::calculateCumulativeGPA() const {
             const Course& course = courseInstance.first;
             const std::string& grade = courseInstance.second;
             float gradePoints = getGradePoints(grade);
-            totalGradePoints += gradePoints * course.credits;
-            totalCreditHours += course.credits;
+            totalGradePoints += gradePoints * course.getCreditHours();
+            totalCreditHours += course.getCreditHours();
         }
     }
 
@@ -54,12 +55,13 @@ float GPACalculator::calculateCumulativeGPA() const {
     return totalGradePoints / totalCreditHours;
 }
 
+
 int GPACalculator::getTotalCreditHours(const std::string& semester) const {
     int totalCreditHours = 0;
     auto it = semesters.find(semester);
     if (it != semesters.end()) {
         for (const auto& courseInstance : it->second) {
-            totalCreditHours += courseInstance.first.credits;
+            totalCreditHours += courseInstance.first.getCreditHours();
         }
     }
     return totalCreditHours;
@@ -124,7 +126,7 @@ void GPACalculator::listGPACalcCourses() {
         for (const auto& courseInstance : semester.second) {
             const Course& course = courseInstance.first;
             const std::string& grade = courseInstance.second;
-            std::cout << course.code << ": " << course.title << " (" << course.credits << " credits) - Grade: " << grade << std::endl;
+            std::cout << course.getCode() << ": " << course.getTitle() << " (" << course.getCreditHours() << " credits) - Grade: " << grade << std::endl;
         }
     }
 }
