@@ -1,4 +1,5 @@
 #include "Semester.h"
+#include "StudyPlan.h"
 #include <iostream>
 
 Semester::Semester(const std::string& name, int maxCredits)

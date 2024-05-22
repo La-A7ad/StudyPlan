@@ -1,10 +1,10 @@
 #ifndef STUDYPLAN_H
 #define STUDYPLAN_H
 
-#include "Semester.h"
 #include <vector>
 #include <set>
 #include <string>
+#include "Semester.h"
 
 class StudyPlan {
 private:
@@ -21,4 +21,4 @@ public:
     const std::vector<Semester>& getSemesters() const;  // Getter for semesters
 };
 
-#endif
+#endif // STUDYPLAN_H

@@ -4,7 +4,9 @@
 #include <string>
 #include <vector>
 #include "Course.h"
-#include "StudyPlan.h"
+
+// Forward declare StudyPlan
+class StudyPlan;
 
 class Semester {
 private:
@@ -23,4 +25,4 @@ public:
     int getTotalCredits() const;
 };
 
-#endif
+#endif // SEMESTER_H

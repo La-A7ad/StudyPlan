@@ -3,6 +3,7 @@
 #include "StudyPlan.h"
 #include "Student.h"
 #include "nlohmann/json.hpp"
+#include <string>
 using json = nlohmann::json;
 
 json loadData(); 

@@ -46,3 +46,4 @@ void StudyPlan::markCourseAsCompleted(const std::string& courseCode) {
 const std::vector<Semester>& StudyPlan::getSemesters() const {
     return semesters;
 }
+
