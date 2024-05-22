@@ -3,9 +3,9 @@
 float GPACalculator::getGradePoints(const std::string& letterGrade) const {
     if (letterGrade == "A") return 4.0;
     if (letterGrade == "A-") return 3.7;
-    if (letterGrade == "B+") return 3.3;
-    if (letterGrade == "B") return 3.0;
-    if (letterGrade == "B-") return 2.7;
+    if (letterGrade == "B+") return 3.5;
+    if (letterGrade == "B") return 3.3;
+    if (letterGrade == "B-") return 3.0;
     if (letterGrade == "C+") return 2.3;
     if (letterGrade == "C") return 2.0;
     if (letterGrade == "C-") return 1.7;
@@ -13,9 +13,9 @@ float GPACalculator::getGradePoints(const std::string& letterGrade) const {
 }
 
 void GPACalculator::addCourse(const std::string& semester, const std::string& courseID, const std::string& grade) {
-    auto it = Course::courseCatalog.find(courseID);
-    if (it != Course::courseCatalog.end()) {
-        semesters[semester].emplace_back(courseID, grade);
+    if (Course::courseCatalog.find(courseID) != Course::courseCatalog.end()) {
+        std::pair<std::string, std::string> courseInstance(courseID, grade);
+        semesters[semester].push_back(courseInstance);
     }
 }
 
@@ -26,10 +26,10 @@ std::pair<float, int> GPACalculator::calculateWeightedGPA(const std::string& sem
     auto it = semesters.find(semester);
     if (it != semesters.end()) {
         for (const auto& courseInstance : it->second) {
-            auto courseIt = Course::courseCatalog.find(courseInstance.courseID);
+            auto courseIt = Course::courseCatalog.find(courseInstance.first);
             if (courseIt != Course::courseCatalog.end()) {
                 const Course& course = courseIt->second;
-                float gradePoints = getGradePoints(courseInstance.grade);
+                float gradePoints = getGradePoints(courseInstance.second);
                 totalGradePoints += gradePoints * course.getCreditHours();
                 totalCreditHours += course.getCreditHours();
             }
@@ -46,10 +46,10 @@ float GPACalculator::calculateCumulativeGPA() const {
 
     for (const auto& semester : semesters) {
         for (const auto& courseInstance : semester.second) {
-            auto courseIt = Course::courseCatalog.find(courseInstance.courseID);
+            auto courseIt = Course::courseCatalog.find(courseInstance.first);
             if (courseIt != Course::courseCatalog.end()) {
                 const Course& course = courseIt->second;
-                float gradePoints = getGradePoints(courseInstance.grade);
+                float gradePoints = getGradePoints(courseInstance.second);
                 totalGradePoints += gradePoints * course.getCreditHours();
                 totalCreditHours += course.getCreditHours();
             }
@@ -65,7 +65,7 @@ int GPACalculator::getTotalCreditHours(const std::string& semester) const {
     auto it = semesters.find(semester);
     if (it != semesters.end()) {
         for (const auto& courseInstance : it->second) {
-            auto courseIt = Course::courseCatalog.find(courseInstance.courseID);
+            auto courseIt = Course::courseCatalog.find(courseInstance.first);
             if (courseIt != Course::courseCatalog.end()) {
                 totalCreditHours += courseIt->second.getCreditHours();
             }
