@@ -1,41 +1,31 @@
-#pragma once
+#ifndef SEMESTER_H
+#define SEMESTER_H
+
 #include <string>
 #include <vector>
-#include <map>
 #include "Course.h"
 
+// Forward declare StudyPlan
+class StudyPlan;
+
 class Semester {
-protected:
-    int maxCredits;  // default maximum credits
-    std::string semesterName;
+private:
+    std::string name;
+    int maxCredits;
+    std::vector<Course> courses;
+
 public:
-    std::vector<std::string> courses;
+    Semester(const std::string& name, int maxCredits);
 
-    Semester(std::string name, int credits) : semesterName(name), maxCredits(credits) {}
+    bool addCourse(const Course& course, const StudyPlan& studyPlan);
+    void listCourses() const;
 
-    bool canAddCourse(const Course& course);
-    void addCourse(const std::string& courseCode);
-
-    // Getter method for semesterName
-    std::string getSemesterName() const {
-        return semesterName;
-    }
+    const std::string& getName() const;
+    int getMaxCredits() const;
+    int getTotalCredits() const;
 };
 
-class FallSemester : public Semester {
-public:
-    FallSemester(std::string name, bool overload)
-        : Semester(name, overload ? 21 : 18) {}
-};
+#endif // SEMESTER_H
 
-class SpringSemester : public Semester {
-public:
-    SpringSemester(std::string name, bool overload)
-        : Semester(name, overload ? 21 : 18) {}
-};
 
-class SummerSemester : public Semester {
-public:
-    SummerSemester(std::string name)
-        : Semester(name, 7) {}
-};
+//test

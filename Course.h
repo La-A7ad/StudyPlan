@@ -1,16 +1,31 @@
-#pragma once
-#include <vector>
+#ifndef COURSE_H
+#define COURSE_H
+
 #include <string>
+#include <vector>
 #include <map>
 
 class Course {
-public:
+private:
+    std::string code;
     std::string title;
     int creditHours;
     std::vector<std::string> prerequisites;
 
-    Course(std::string t, int ch, std::vector<std::string> preqs)
-        : title(t), creditHours(ch), prerequisites(preqs) {}
+public:
+    Course(std::string code, std::string title, int creditHours, std::vector<std::string> prerequisites);
 
     static std::map<std::string, Course> courseCatalog;
+
+    const std::vector<std::string>& getPrerequisites() const;
+    const std::string& getCode() const;
+    const std::string& getTitle() const;
+    int getCreditHours() const;
+    static std::vector<std::string> searchCourse(const std::string& courseCodePrefix);
+
+    
 };
+
+#endif
+
+//test

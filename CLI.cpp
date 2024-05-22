@@ -1,101 +1,109 @@
 #include "CLI.h"
 #include <iostream>
-#include <sstream>
-#include <chrono>
-#include <thread>
+#include <string>
 
-json studentJSON() {
-    std::string jsonData = R"({
-      "Majors": {
-        "DSAI": {
-          "Concentrations": ["DSAI"]
-        },
-        "SWD": {
-          "Concentrations": ["HCI", "APD", "GD"]
-        },
-        "IT": {
-          "Concentrations": ["NS", "CC"]
-        }
-      },
-      "Years": ["2022", "2023"],
-      "canOverload" : false
-    })";
 
-    json j = json::parse(jsonData);
-    return j;
-}
-
-void CLI::printSlowly(const std::string &text) {
-    for (char const &c : text) {
-        std::cout << c << std::flush;
-        std::this_thread::sleep_for(std::chrono::milliseconds(1));
-    }
-}
-
-void CLI::handleCommand(const std::string& command) {
-    if (command == "add_semester") {
-        std::string name, type;
-        std::cout << "Enter semester name: ";
-        std::getline(std::cin, name); // Use getline to avoid issues with cin
-        std::cout << "Enter semester type (Fall/Spring/Summer): ";
-        std::getline(std::cin, type); // Use getline to avoid issues with cin
-
-        studyPlan.addSemester(name, type);
-    } else if (command == "add_course") {
-        std::string semesterName, courseCode;
-        std::cout << "Enter semester name: ";
-        std::getline(std::cin, semesterName); // Use getline to avoid issues with cin
-        std::cout << "Enter course code: ";
-        std::getline(std::cin, courseCode); // Use getline to avoid issues with cin
-
-        studyPlan.addCourseToSemester(semesterName, courseCode);
-    } else if (command == "start") {
-        studentinput.setDetails(studentJSON());
-    } else if (command == "student") {
-        std::string major = studentinput.getMajor();
-        std::string concentration = studentinput.getConcentration();
-        std::string year = studentinput.getyear();
-        std::string cGPA = studentinput.getcGPA();
-        bool overload = studentinput.getcanOverload();
-    } else {
-        std::cout << "Unknown command.\n";
-    }
+void CLI::displayStudentData() {
+    std::cout << "Major: " << student.getMajor() << std::endl;
+    std::cout << "Concentration: " << student.getConcentration() << std::endl;
+    std::cout << "Year: " << student.getYear() << std::endl;
+    std::cout << "GPA: " << student.getcGPA() << std::endl;
+    std::cout << "Can Overload: " << (student.getcanOverload() ? "Yes" : "No") << std::endl;
 }
 
 void CLI::run() {
-    std::string Zewail_logo =
-                "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n"
-                "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡤⡄⠀⠀⢫⣯⡇⡤⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n"
-                "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⡠⠔⡆⡟⢣⠀⣰⢺⡅⣇⠟⣇⡤⡄⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n"
-                "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⡳⣄⢀⡻⢹⣆⣿⢸⡸⣨⠁⠛⠚⠂⠨⢤⣭⣰⡟⠦⡍⢳⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n"
-                "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠑⡉⡵⠺⣿⠽⠓⠉⠉⠁⠀⠀⠀⠀⠀⠈⠛⠚⠈⠉⠒⢬⢁⡑⡆⠀⠀⠀⠀⠀⠀⠀⠀\n"
-                "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⠖⣿⠿⠟⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠢⠔⣿⠲⡀⠀⠀⠀⠀⠀⠀\n"
-                "⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⠞⣡⠞⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠳⣌⠢⡀⠀⠀⠀⠀\n"
-                "⠀⠀⠀⠀⠀⠀⠀⠀⡰⢁⡜⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⢢⠈⢄⠀⠀⠀\n"
-                "⠀⠀⠀⠀⠀⠀⠀⡰⢁⠎⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⡾⡼⣷⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠱⡈⢧⠀⠀\n"
-                "⠀⠀⠀⠀⠀⠀⡰⠁⡎⠀⠀⠀⠀⠀⠀⠀⠀⢀⣠⣦⡀⠀⣠⣾⢿⣻⠁⠈⠻⣷⢄⠀⠀⢀⣤⣄⠀⠀⠀⠀⠀⠀⠀⢱⠈⢇⠀\n"
-                "⠀⠀⠀⠀⠀⢠⠃⡸⠀⠀⠀⠀⠀⠀⠀⢀⣴⡿⣯⠏⠙⢾⣟⢁⣮⠇⠀⠀⠀⠈⠳⣕⢾⣿⣻⠻⣷⣄⠀⠀⠀⠀⠀⠀⢇⠘⡄\n"
-                "⠀⠀⠀⠀⠀⡸⢀⡇⠀⠀⠀⠀⠀⠀⢀⣴⡿⠋⡸⡞⠀⠀⠈⠻⣟⢞⠀⠀⠀⠀⠀⠀⠈⠳⣝⢇⠀⠈⠻⣷⢄⠀⠀⠀⠀⠸⡀⢇\n"
-                "⠀⠀⠀⠀⠀⡇⢸⠀⠀⠀⠀⣀⢴⡿⣫⣴⣿⡷⡃⠀⠀⠀⠀⠈⠳⣵⣶⢿⣦⢀⠀⠀⠀⠈⠳⣕⢄⠀⠈⠳⣕⢄⠀⠀⠀⡇⢸\n"
-                "⠀⠀⠀⠀⠀⣗⣚⣒⣒⣒⣚⣓⣓⣚⣻⣻⠃⠙⢮⣓⣒⣒⣒⣒⣚⣛⣟⡎⠈⠢⣑⣒⣒⣒⣒⣚⣳⣕⣒⣒⣚⣳⣕⣒⣒⣓⣺\n"
-                "⠀⠀⠀⠀⠀⣤⡒⢲⡖⣶⡖⠒⢒⣤⡦⡤⣶⣄⠀⣠⣦⢦⠀⠀⡖⡶⡶⡄⠀⠀⠀⢀⣤⡶⢶⣄⣰⢦⣔⡖⢐⠒⡢⣄⠀⢠⣷\n"
-                "⠀⠀⠀⠀⠀⠉⢀⢞⡜⠁⠀⣥⣤⡍⢱⢹⣼⡜⣤⣿⣿⣏⢧⠀⡇⡇⡇⡇⠀⠀⠀⡞⡸⠀⠈⠓⣿⠘⠉⠁⡎⠀⠈⢎⢳⡿⠁\n"
-                "⠀⠀⠀⠀⠀⡠⢣⡎⠀⣀⡀⣇⢀⣴⠀⢇⣹⢳⢹⣿⠟⠛⣌⢆⡇⣇⡇⠇⠀⢀⠀⠱⣹⣄⣀⣴⣿⢀⠀⣀⣧⠀⠀⢸⢸⡁⠀\n"
-                "⠀⠀⠀⠀⠀⠉⠉⠉⠉⠉⠉⠉⠉⠉⠀⠈⠁⠀⠉⠉⠀⠀⠈⠉⠉⠉⠉⠉⠉⠉⠀⠀⠈⠉⠉⠁⠈⠉⠀⠈⠉⠀⠀⠀⠉⠀⠀\n"
-                "Welcome to the CSAI Study Plan Editor! Enter 'start'.     \n ";
-
-    printSlowly(Zewail_logo);
-
     std::string command;
-
     while (true) {
-        std::cout << "-> ";
+        std::cout << "Enter command: ";
         std::getline(std::cin, command);
 
         if (command == "exit") {
             break;
+        } else if (command == "add_semester") {
+            std::string semesterName;
+            int maxCredits;
+            std::cout << "Enter semester name: ";
+            std::getline(std::cin, semesterName);
+            std::cout << "Enter maximum credits: ";
+            std::cin >> maxCredits;
+            std::cin.ignore(); // To ignore the newline character after the integer input
+            Semester semester(semesterName, maxCredits);
+            studyPlan.addSemester(semester);
+            std::cout << "Semester " << semesterName << " added with max credits " << maxCredits << "." << std::endl;
+        } else if (command == "add_course") {
+            std::string semesterName, courseCode;
+            std::cout << "Enter semester name: ";
+            std::getline(std::cin, semesterName);
+            std::cout << "Enter course code: ";
+            std::getline(std::cin, courseCode);
+            studyPlan.addCourseToSemester(semesterName, courseCode);
+        } else if (command == "list_courses") {
+            std::string semesterName;
+            std::cout << "Enter semester name: ";
+            std::getline(std::cin, semesterName);
+            studyPlan.listCoursesInSemester(semesterName);
+        } else if (command == "enter_gpa_calc") {
+            enterGPACalcEnvironment();
         } else {
-            handleCommand(command);
+            std::cout << "Unknown command." << std::endl;
         }
     }
 }
+
+void CLI::enterGPACalcEnvironment() {
+    std::string command;
+    while (true) {
+        std::cout << "GPA Calc > ";
+        std::getline(std::cin, command);
+
+        if (command == "exit") {
+            break;
+        } else if (command == "add_course") {
+            addCourseToGPACalc();
+        } else if (command == "calc_weighted_gpa") {
+            calculateWeightedGPA();
+        } else if (command == "calc_cumulative_gpa") {
+            calculateCumulativeGPA();
+        } else if (command == "list_courses") {
+            listGPACalcCourses();
+        } else {
+            std::cout << "Unknown command." << std::endl;
+        }
+    }
+}
+
+void CLI::addCourseToGPACalc() {
+    std::string semester, courseID, grade;
+    std::cout << "Enter semester: ";
+    std::getline(std::cin, semester);
+    std::cout << "Enter course ID: ";
+    std::getline(std::cin, courseID);
+    std::cout << "Enter grade: ";
+    std::getline(std::cin, grade);
+    gpaCalculator.addCourse(semester, courseID, grade);
+    std::cout << "Course " << courseID << " added to " << semester << " with grade " << grade << "." << std::endl;
+}
+
+void CLI::calculateWeightedGPA() {
+    std::string semester;
+    std::cout << "Enter semester: ";
+    std::getline(std::cin, semester);
+    auto [gpa, credits] = gpaCalculator.calculateWeightedGPA(semester);
+    std::cout << "Weighted GPA for " << semester << ": " << gpa << " (" << credits << " credits)" << std::endl;
+}
+
+void CLI::calculateCumulativeGPA() {
+    float gpa = gpaCalculator.calculateCumulativeGPA();
+    std::cout << "Cumulative GPA: " << gpa << std::endl;
+}
+
+void CLI::listGPACalcCourses() {
+    const auto& semesters = gpaCalculator.getSemesters();
+    for (const auto& [semester, courses] : semesters) {
+        std::cout << "Semester: " << semester << std::endl;
+        for (const auto& [courseID, grade] : courses) {
+            std::cout << "  Course ID: " << courseID << ", Grade: " << grade << std::endl;
+        }
+    }
+}
+//test

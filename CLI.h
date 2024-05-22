@@ -1,20 +1,31 @@
-#pragma once
-#include "Student.h"
+#ifndef CLI_H
+#define CLI_H
 #include "StudyPlan.h"
+#include "Student.h"
 #include "nlohmann/json.hpp"
-
+#include "cgpacalc.h"
+#include <string>
 using json = nlohmann::json;
+
+json loadData(); 
 
 class CLI {
 private:
-    Student studentinput;
-    StudyPlan studyPlan; // Add a StudyPlan member
-
-    static void printSlowly(const std::string &text);
-    void handleCommand(const std::string& command);
-
+    StudyPlan studyPlan;
+     GPACalculator gpaCalculator;
+    Student studentinput;  // Re-added the student input
+    void displayStudentData();      // Re-added json loader function
+    Student student;
 public:
+    CLI() = default;
     void run();
+    void enterGPACalcEnvironment();
+    void addCourseToGPACalc();
+    void calculateWeightedGPA();
+    void calculateCumulativeGPA();
+    void listGPACalcCourses();
 };
 
-json studentJSON();
+#endif
+
+//test

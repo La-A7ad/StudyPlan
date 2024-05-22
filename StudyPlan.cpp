@@ -1,33 +1,50 @@
 #include "StudyPlan.h"
 #include <iostream>
 
-void StudyPlan::addSemester(std::string name, std::string type) {
-    if (type == "Fall") {
-        semesters.push_back(new FallSemester(name, true)); // Assume overload is allowed for demo
-    } else if (type == "Spring") {
-        semesters.push_back(new SpringSemester(name, true)); // Assume overload is allowed for demo
-    } else if (type == "Summer") {
-        semesters.push_back(new SummerSemester(name));
-    } else {
-        std::cout << "Invalid semester type.\n";
-        return;
-    }
-    std::cout << "Semester " << name << " added.\n";
+void StudyPlan::addSemester(const Semester& semester) {
+    semesters.push_back(semester);
 }
 
 void StudyPlan::addCourseToSemester(const std::string& semesterName, const std::string& courseCode) {
-    for (auto semester : semesters) {
-        if (semester->getSemesterName() == semesterName) {
-            // Check if the course exists in the courseCatalog before accessing it
-            auto it = courseCatalog.find(courseCode);
-            if (it != courseCatalog.end()) {
-                semester->addCourse(courseCode);
+    for (auto& semester : semesters) {
+        if (semester.getName() == semesterName) {
+            auto it = Course::courseCatalog.find(courseCode);
+            if (it != Course::courseCatalog.end()) {
+                if (semester.addCourse(it->second, *this)) {
+                    std::cout << "Course " << courseCode << " added to " << semesterName << " semester." << std::endl;
+                    markCourseAsCompleted(courseCode); // Mark course as completed
+                } else {
+                    std::cout << "Failed to add course " << courseCode << " to " << semesterName << " semester." << std::endl;
+                }
             } else {
-                std::cout << "Course not found in the catalog.\n";
+                std::cout << "Course " << courseCode << " not found in catalog." << std::endl;
             }
             return;
         }
     }
-    std::cout << "Semester not found.\n";
+    std::cout << "Semester " << semesterName << " not found." << std::endl;
 }
 
+void StudyPlan::listCoursesInSemester(const std::string& semesterName) const {
+    for (const auto& semester : semesters) {
+        if (semester.getName() == semesterName) {
+            semester.listCourses();
+            return;
+        }
+    }
+    std::cout << "Semester " << semesterName << " not found." << std::endl;
+}
+
+bool StudyPlan::hasCompletedCourse(const std::string& courseCode) const {
+    return completedCourses.find(courseCode) != completedCourses.end();
+}
+
+void StudyPlan::markCourseAsCompleted(const std::string& courseCode) {
+    completedCourses.insert(courseCode);
+}
+
+const std::vector<Semester>& StudyPlan::getSemesters() const {
+    return semesters;
+}
+
+//test

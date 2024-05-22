@@ -1,16 +1,18 @@
 CXX = g++
 CXXFLAGS = -Wall -std=c++20 -O2
-SOURCES = main.cpp CLI.cpp Course.cpp Semester.cpp StudyPlan.cpp Student.cpp
-HEADERS = CLI.h Course.h Semester.h StudyPlan.h Student.h
-TARGET = main
 
-all: $(TARGET)
+SRCS = main.cpp CLI.cpp Course.cpp Semester.cpp StudyPlan.cpp Student.cpp cgpacalc.cpp
+OBJS = $(SRCS:.cpp=.o)
+EXEC = main
 
-$(TARGET): $(SOURCES) $(HEADERS)
-	$(CXX) $(CXXFLAGS) $(SOURCES) -o $(TARGET)
+all: $(EXEC)
 
-debug:
-	gdb $(TARGET)
+$(EXEC): $(OBJS)
+	$(CXX) $(CXXFLAGS) -o $@ $^
+
+%.o: %.cpp
+	$(CXX) $(CXXFLAGS) -c $<
 
 clean:
-	rm -f $(TARGET)
+	rm -f $(OBJS) $(EXEC)
+

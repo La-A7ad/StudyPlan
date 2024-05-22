@@ -1,34 +1,50 @@
 #include "Semester.h"
-#include <algorithm>
+#include "StudyPlan.h"
 #include <iostream>
 
-bool Semester::canAddCourse(const Course& course) {
-    if (courses.size() >= maxCredits) {
-        std::cout << "Max credit limit reached for this semester.\n";
-        return false;
-    }
+Semester::Semester(const std::string& name, int maxCredits)
+    : name(name), maxCredits(maxCredits) {}
 
-    // Check if the course exists in the catalog
-    if (Course::courseCatalog.find(course.title) == Course::courseCatalog.end()) {
-        std::cout << "Course does not exist in the catalog.\n";
-        return false;
-    }
-
-    // Check if prerequisites are met
-    for (const auto& prereq : course.prerequisites) {
-        if (std::find(courses.begin(), courses.end(), prereq) == courses.end()) {
-            std::cout << "Prerequisite " << prereq << " not met.\n";
+bool Semester::addCourse(const Course& course, const StudyPlan& studyPlan) {
+    // Check if all prerequisites are completed
+    for (const auto& prereq : course.getPrerequisites()) {
+        if (!studyPlan.hasCompletedCourse(prereq)) {
+            std::cout << "Cannot add course " << course.getCode() << " - prerequisite " << prereq << " not completed." << std::endl;
             return false;
         }
     }
 
-    return true;
-}
-
-void Semester::addCourse(const std::string& courseCode) {
-    const auto& course = Course::courseCatalog.at(courseCode);
-    if (canAddCourse(course)) {
-        courses.push_back(courseCode);
-        std::cout << "Course " << courseCode << " added successfully.\n";
+    int currentCredits = getTotalCredits();
+    if (currentCredits + course.getCreditHours() <= maxCredits) {
+        courses.push_back(course);
+        return true;
+    } else {
+        std::cout << "Cannot add course " << course.getCode() << " - exceeds maximum credits." << std::endl;
+        return false;
     }
 }
+
+void Semester::listCourses() const {
+    std::cout << "Courses in " << name << " semester:" << std::endl;
+    for (const auto& course : courses) {
+        std::cout << course.getCode() << ": " << course.getTitle() << " (" << course.getCreditHours() << " credits)" << std::endl;
+    }
+}
+
+const std::string& Semester::getName() const {
+    return name;
+}
+
+int Semester::getMaxCredits() const {
+    return maxCredits;
+}
+
+int Semester::getTotalCredits() const {
+    int totalCredits = 0;
+    for (const auto& course : courses) {
+        totalCredits += course.getCreditHours();
+    }
+    return totalCredits;
+}
+
+//test
