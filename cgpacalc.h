@@ -23,4 +23,5 @@ public:
     std::pair<float, int> calculateWeightedGPA(const std::string& semester) const;
     float calculateCumulativeGPA() const;
     int getTotalCreditHours(const std::string& semester) const;
+    const std::map<std::string, std::vector<std::pair<std::string, std::string>>>& getSemesters() const; 
 };

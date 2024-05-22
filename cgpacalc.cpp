@@ -73,3 +73,7 @@ int GPACalculator::getTotalCreditHours(const std::string& semester) const {
     }
     return totalCreditHours;
 }
+
+const std::map<std::string, std::vector<std::pair<std::string, std::string>>>& GPACalculator::getSemesters() const {
+    return semesters;
+}

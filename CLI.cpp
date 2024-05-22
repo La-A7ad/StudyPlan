@@ -2,29 +2,21 @@
 #include <iostream>
 #include <string>
 
-void CLI::displayStudentData() {
-    std::cout << "Major: " << student.getMajor() << std::endl;
-    std::cout << "Concentration: " << student.getConcentration() << std::endl;
-    std::cout << "Year: " << student.getYear() << std::endl;
-    std::cout << "GPA: " << student.getcGPA() << std::endl;
-    std::cout << "Can Overload: " << (student.getcanOverload() ? "Yes" : "No") << std::endl;
-}
-
 void CLI::enterGPACalcEnvironment() {
     std::string command;
     while (true) {
-        std::cout << "Enter GPA Calc command: ";
+        std::cout << "Enter GPA calc command: ";
         std::getline(std::cin, command);
 
         if (command == "exit_gpa") {
             break;
-        } else if (command == "add_gpa_course") {
+        } else if (command == "add_course_gpa") {
             addCourseToGPACalc();
-        } else if (command == "calculate_weighted_gpa") {
+        } else if (command == "calc_weighted_gpa") {
             calculateWeightedGPA();
-        } else if (command == "calculate_cumulative_gpa") {
+        } else if (command == "calc_cumulative_gpa") {
             calculateCumulativeGPA();
-        } else if (command == "list_gpa_courses") {
+        } else if (command == "list_courses_gpa") {
             listGPACalcCourses();
         } else {
             std::cout << "Unknown command." << std::endl;
@@ -33,35 +25,35 @@ void CLI::enterGPACalcEnvironment() {
 }
 
 void CLI::addCourseToGPACalc() {
-    std::string semesterName, courseCode, grade;
-    std::cout << "Enter semester name: ";
-    std::getline(std::cin, semesterName);
-    std::cout << "Enter course code: ";
-    std::getline(std::cin, courseCode);
+    std::string semester, courseID, grade;
+    std::cout << "Enter semester: ";
+    std::getline(std::cin, semester);
+    std::cout << "Enter course ID: ";
+    std::getline(std::cin, courseID);
     std::cout << "Enter grade: ";
     std::getline(std::cin, grade);
-    gpaCalculator.addCourse(semesterName, courseCode, grade);
-    std::cout << "Course " << courseCode << " with grade " << grade << " added to semester " << semesterName << "." << std::endl;
+    gpaCalculator.addCourse(semester, courseID, grade);
 }
 
 void CLI::calculateWeightedGPA() {
-    std::string semesterName;
-    std::cout << "Enter semester name: ";
-    std::getline(std::cin, semesterName);
-    auto result = gpaCalculator.calculateWeightedGPA(semesterName);
-    std::cout << "Weighted GPA for semester " << semesterName << " is " << result.first << " with total credit hours " << result.second << "." << std::endl;
+    std::string semester;
+    std::cout << "Enter semester: ";
+    std::getline(std::cin, semester);
+    auto result = gpaCalculator.calculateWeightedGPA(semester);
+    std::cout << "Weighted GPA for " << semester << ": " << result.first << " with " << result.second << " credit hours." << std::endl;
 }
 
 void CLI::calculateCumulativeGPA() {
     float cumulativeGPA = gpaCalculator.calculateCumulativeGPA();
-    std::cout << "Cumulative GPA is " << cumulativeGPA << "." << std::endl;
+    std::cout << "Cumulative GPA: " << cumulativeGPA << std::endl;
 }
 
 void CLI::listGPACalcCourses() {
-    for (const auto& semester : gpaCalculator.getSemesters()) {
-        std::cout << "Courses in " << semester.first << " semester:" << std::endl;
-        for (const auto& courseInstance : semester.second) {
-            std::cout << courseInstance.getCourseCode() << ": " << courseInstance.getGrade() << std::endl;
+    const auto& semesters = gpaCalculator.getSemesters();
+    for (const auto& semester : semesters) {
+        std::cout << "Semester: " << semester.first << std::endl;
+        for (const auto& course : semester.second) {
+            std::cout << "Course ID: " << course.first << ", Grade: " << course.second << std::endl;
         }
     }
 }
